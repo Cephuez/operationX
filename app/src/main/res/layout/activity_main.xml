@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="Levels"
         android:textSize="20dp"
-        android:onClick="startLevel"
+        android:onClick="showLevels"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="10dp"
         android:background="#A1E2FF"/>
