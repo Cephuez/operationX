@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:id="@+id/MainMenu"
     tools:context=".MainActivity"
     android:orientation="vertical"
@@ -24,10 +24,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/game_tile_canvas"
-        android:layout_width="400dp"
-        android:layout_height="550dp"
-        android:orientation="horizontal">
+        android:id="@+id/game_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/game_level"
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:orientation="horizontal">
+        </ImageView>
+
+        <ImageView
+            android:layout_alignTop="@id/game_level"
+            android:layout_alignBottom="@id/game_level"
+            android:layout_alignLeft="@id/game_level"
+            android:layout_alignRight="@id/game_level"
+            android:id="@+id/player_sprite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+
     </LinearLayout>
 
     <LinearLayout
