@@ -16,8 +16,7 @@ public class Player {
     }
 
     private void SetUpPlayer(){
-        ImageView playerView = operationGameplay.findViewById(R.id.player_sprite);
-        playerView.setImageResource(R.drawable.player_1);
+
     }
 
 }
