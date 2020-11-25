@@ -1,5 +1,6 @@
 package com.example.operationx;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +24,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class LevelsListFragment extends Fragment {
+    ArrayList<GameLevel> levels = new ArrayList<>();
+    GameLevel level1 = new GameLevel("Cat Level", 1);
+    GameLevel level2 = new GameLevel("Plane Level", 2);
+    GameLevel level3 = new GameLevel("Pug Level", 3);
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +40,9 @@ public class LevelsListFragment extends Fragment {
 
     public LevelsListFragment() {
         // Required empty public constructor
+        levels.add(level1);
+        levels.add(level2);
+        levels.add(level3);
     }
 
     /**
@@ -55,10 +72,29 @@ public class LevelsListFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_levels_list, container, false);
+        View view =  inflater.inflate(R.layout.fragment_levels_list, container, false);
+        ListView simpleListView=(ListView) view.findViewById(R.id.listView);
+        ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
+        JSONObject article = null;
+        for(int i=0; i<levels.size(); i++) {
+            GameLevel currLevel = levels.get(i);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("name", currLevel.levelName);
+            hashMap.put("image", currLevel.characterImage + "");
+            arrayList.add(hashMap);
+        }
+        String[] from={"name","image"};
+        int[] to={R.id.level_number,R.id.character_image};
+        SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),arrayList,
+                R.layout.level_item,from,to);
+        simpleListView.setAdapter(simpleAdapter);
+
+
+        return view;
     }
 }
