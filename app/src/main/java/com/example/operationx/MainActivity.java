@@ -1,24 +1,39 @@
 package com.example.operationx;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+
 public class MainActivity extends AppCompatActivity {
-// added comment test from AS
+    ArrayList<GameLevel> levels = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
-        System.out.println("Try to do something xd");
-    }
 
-    public void startLevel(View view){
-        Intent gameIntent = new Intent(this, OperationGameplay.class);
-        startActivity(gameIntent);
+
+
+
+        MainMenuFragment mmFrag = new MainMenuFragment();
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_layout,
+                mmFrag);
+        transaction.commit();
+
+
+
     }
 }
+
+
+
