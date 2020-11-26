@@ -73,10 +73,13 @@ public class GameTile extends View {
         super.onDraw(canvas);
         this.canvas = canvas;
         Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
+        Drawable player = getResources().getDrawable(R.drawable.player_1);
         for(int i = 0; i < 10; i++){
             tile1.setBounds(i*fixSize + xPos,0,i*fixSize + fixSize + xPos,fixHeight);
             tile1.draw(this.canvas);
         }
+        player.setBounds(200,(fixHeight/2) - 100,200+200,(fixHeight/2) + 100);
+        player.draw(this.canvas);
     }
 
     public void clearCanvas(){

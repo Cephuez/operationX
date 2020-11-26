@@ -27,11 +27,15 @@ public class OperationGameplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
+        createCanvas();
         createTileMap();
         createPlayer();
         beginPlayerMovement();
     }
 
+    private void createCanvas(){
+
+    }
     private void createPlayer(){
         Player player = new Player(this,R.drawable.player_1);
     }
@@ -46,16 +50,6 @@ public class OperationGameplay extends AppCompatActivity {
 
         gameView.draw(canvas);
         gameView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1500));
-
-        /*
-        gameView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveCanvas();
-            }
-        });
-
-         */
         gameLayout.addView(gameView);
     }
 
@@ -66,7 +60,6 @@ public class OperationGameplay extends AppCompatActivity {
                 gameView.changeXPos();
                 gameView.clearCanvas();
                 gameView.draw(canvas);
-                System.out.println("XD");
             }
         }, 0, 100);//put here time 1000 milliseconds=1 second
     }
