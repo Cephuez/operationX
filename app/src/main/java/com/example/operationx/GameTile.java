@@ -35,10 +35,9 @@ public class GameTile extends View {
     private Player player;
     private GroundTile groundTile;
     private MapTiles mapTiles;
-    private Enemy enemy;
 
     private Drawable playerDrawable;
-    private ArrayList<Drawable> enemyDrawableList;
+    private ArrayList<Enemy> enemyList;
 
     public GameTile(Activity currActivity){
         super(currActivity);
@@ -50,12 +49,10 @@ public class GameTile extends View {
 
     private void createGameObjects(){
         player = new Player(fixSize,fixWidth,fixHeight);
-        groundTile = new GroundTile(fixSize,fixWidth,fixHeight);
+        groundTile = new GroundTile();
 
         // Later need to modify again
         mapTiles = new MapTiles(fixSize,fixWidth,fixHeight);
-
-        enemy = new Enemy(fixSize,fixWidth,fixHeight);
     }
 
     private void setPreValues(){
@@ -75,7 +72,6 @@ public class GameTile extends View {
     public boolean onTouchEvent(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
-        System.out.println(xPos);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
@@ -94,6 +90,7 @@ public class GameTile extends View {
         }
         return true;
     }
+
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
@@ -103,12 +100,23 @@ public class GameTile extends View {
         createPlayer();
     }
 
+    /*
+    private void drawAllObjects(){
+        ArrayList<Drawable> tileList = groundTile.getGroundTiles();
+        for(int i = 0; i < tileList.size(); i++){
+            Drawable tile = tileList.get(i);
+            tile.draw(canvas);
+        }
+    }
+
+     */
     private void createGroundTiles(){
         Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
         for(int i = 0; i < 20; i++){
             tile1.setBounds(i*fixSize + xPos,yPos/2,
                     i*fixSize + fixSize + xPos,yPos/2+fixHeight);
-            tile1.draw(this.canvas);
+            groundTile.addGroundTile(containerActivity,tile1.getBounds());
+            tile1.draw(canvas);
         }
     }
 
@@ -122,18 +130,19 @@ public class GameTile extends View {
 
     private void createObstacles(){
         Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
-        enemyDrawableList = new ArrayList<Drawable>();
+        enemyList = new ArrayList<Enemy>();
 
-
-        for(int i = 0; i < 5; i++){
+        for(int i = 3; i < 8; i++){
             enemies.setBounds(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
             enemies.draw(this.canvas);
-            enemyDrawableList.add(enemies);
+            Enemy newEnemy = new Enemy(enemies.getBounds());
+            enemyList.add(newEnemy);
         }
     }
 
-    private boolean playerHitEnemy(Drawable player, ArrayList<Drawable> enemyList){
-        return player.getBounds().intersect(enemyList.get(1).getBounds());
+    private boolean playerHitEnemy(Drawable player, ArrayList<Enemy> enemyList){
+        Enemy currEnemy = enemyList.get(0);
+        return player.getBounds().intersect(currEnemy.getBoundary());
     }
     public void clearCanvas(){
         canvas.drawColor(Color.WHITE);
@@ -141,13 +150,12 @@ public class GameTile extends View {
     }
 
     public void changeXPos(){
-        if(!playerHitEnemy(playerDrawable, enemyDrawableList) || dir == 1) {
+        if(!playerHitEnemy(playerDrawable, enemyList) || dir == 1) {
             if (xBoundaries > Math.abs(xPos + (dir * 50))) {
                 xPos += (dir * 50);
             }
             if (xPos > 0)
                 xPos = 0;
         }
-
     }
 }

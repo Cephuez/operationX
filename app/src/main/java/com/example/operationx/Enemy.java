@@ -1,12 +1,17 @@
 package com.example.operationx;
 
+import android.graphics.Rect;
+
 public class Enemy {
 
-    private int fixSize, fixWidth, fixHeight;
+    private Rect boundary;
 
-    public Enemy(int fixSize, int fixWidth, int fixHeight) {
-        this.fixSize = fixSize;
-        this.fixWidth = fixWidth;
-        this.fixHeight = fixHeight;
+    public Enemy(Rect boundary) {
+        this.boundary = new Rect(boundary);
+        //this.boundary = boundary;
+    }
+
+    public Rect getBoundary(){
+        return boundary;
     }
 }
