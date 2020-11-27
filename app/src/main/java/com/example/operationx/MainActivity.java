@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_layout,
                 mmFrag);
         transaction.commit();
-
          */
     }
 
