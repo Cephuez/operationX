@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,13 +28,20 @@ public class OperationGameplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
+
+        createCanvas();
         createTileMap();
+        createPlayer();
         beginPlayerMovement();
     }
 
-    private void createButtons(){
+    private void createCanvas(){
 
     }
+    private void createPlayer(){
+        Player player = new Player(this,R.drawable.player_1);
+    }
+
 
     private void createTileMap(){
         gameView = new GameTile(this);
@@ -49,30 +56,13 @@ public class OperationGameplay extends AppCompatActivity {
     }
 
     private void beginPlayerMovement(){
-        final Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                /*
                 gameView.changeXPos();
                 gameView.clearCanvas();
                 gameView.draw(canvas);
-                handler.postDelayed(this,1000);
-
-                 */
-
-                new Timer().scheduleAtFixedRate(new TimerTask( ) {
-                    @Override
-                    public void run() {
-                        gameView.changeXPos();
-                        gameView.clearCanvas();
-                        gameView.draw(canvas);
-                    }
-
-                }, 0, 100);//put here time 1000 milliseconds=1 second
             }
-        };
-
-        //runnable.run();
+        }, 0, 100);//put here time 1000 milliseconds=1 second
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -94,7 +95,22 @@ public class LevelsListFragment extends Fragment {
         int[] to={R.id.level_number,R.id.character_image};
         SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),arrayList,
                 R.layout.level_item,from,to);
+
+
         simpleListView.setAdapter(simpleAdapter);
+        simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            JSONObject clicked;
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), OperationGameplay.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
 
         return view;
