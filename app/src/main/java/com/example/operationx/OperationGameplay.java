@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -29,6 +30,14 @@ public class OperationGameplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
+        ActionsFragment af = new ActionsFragment();
+        GameInfoFragment gif = new GameInfoFragment();
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.action_layout, af);
+        transaction.replace(R.id.game_info_panel, gif)
+                .commit();
+
         createCanvas();
         createTileMap();
         createPlayer();
@@ -46,7 +55,7 @@ public class OperationGameplay extends AppCompatActivity {
     private void createTileMap(){
         gameView = new GameTile(this);
 
-        LinearLayout gameLayout = findViewById(R.id.game_view);
+        FrameLayout gameLayout = findViewById(R.id.game_view);
         Bitmap result = Bitmap.createBitmap(500,500,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(result);
 
