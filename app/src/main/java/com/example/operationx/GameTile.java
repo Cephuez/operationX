@@ -19,26 +19,55 @@ import android.widget.LinearLayout;
 import androidx.constraintlayout.motion.widget.Debug;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class GameTile extends View {
     public Activity containerActivity = null;
     private Canvas gameCanvas;
     private Bitmap canvasBitmap;
-    private int fixSize;
-    private int fixHeight;
-    private Canvas canvas;
+    private int fixSize,fixWidth,fixHeight;
     private int dir;
-    public int xPos = 0;
+    private int xBoundaries;
+    public int xPos, yPos;
+    private Canvas canvas;
+
+    private Player player;
+    private GroundTile groundTile;
+    private MapTiles mapTiles;
+    private Enemy enemy;
+
+    private Drawable playerDrawable;
+    private ArrayList<Drawable> enemyDrawableList;
 
     public GameTile(Activity currActivity){
         super(currActivity);
-        dir = 0;
+        createGameObjects();
+        setPreValues();
         containerActivity = currActivity;
-        fixSize = 200;
-        fixHeight = 1500;
-        xPos = 0;
         this.setBackgroundColor(0xFFFFFFFF);
     }
 
+    private void createGameObjects(){
+        player = new Player(fixSize,fixWidth,fixHeight);
+        groundTile = new GroundTile(fixSize,fixWidth,fixHeight);
+
+        // Later need to modify again
+        mapTiles = new MapTiles(fixSize,fixWidth,fixHeight);
+
+        enemy = new Enemy(fixSize,fixWidth,fixHeight);
+    }
+
+    private void setPreValues(){
+        fixSize = 200;
+        fixHeight = 200;
+        fixWidth = 200;
+        fixHeight = 200;
+        yPos = 1500;
+        xPos = 0;
+        dir = 0;
+        xBoundaries = fixSize * 14;
+    }
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
@@ -46,7 +75,7 @@ public class GameTile extends View {
     public boolean onTouchEvent(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
-
+        System.out.println(xPos);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
@@ -54,15 +83,12 @@ public class GameTile extends View {
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
                 float deltaX = x2 - x1;
-                System.out.println(deltaX);
-                if(Math.abs(deltaX) <= 100){
+                if (Math.abs(deltaX) <= 100) {
                     dir = 0;
-                }else if (deltaX > MIN_DISTANCE) {
-                    dir = 1;
-                }
-                else if(deltaX < MIN_DISTANCE)
-                {
+                } else if (deltaX < MIN_DISTANCE && xPos <= 0) {
                     dir = -1;
+                } else if (deltaX > MIN_DISTANCE && xPos <= 0) {
+                    dir = 1;
                 }
                 break;
         }
@@ -72,21 +98,56 @@ public class GameTile extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         this.canvas = canvas;
-        Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
-        Drawable player = getResources().getDrawable(R.drawable.player_1);
-        for(int i = 0; i < 10; i++){
-            tile1.setBounds(i*fixSize + xPos,0,i*fixSize + fixSize + xPos,fixHeight);
-            tile1.draw(this.canvas);
-        }
-        player.setBounds(200,(fixHeight/2) - 100,200+200,(fixHeight/2) + 100);
-        player.draw(this.canvas);
+        createGroundTiles();
+        createObstacles();
+        createPlayer();
     }
 
+    private void createGroundTiles(){
+        Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
+        for(int i = 0; i < 20; i++){
+            tile1.setBounds(i*fixSize + xPos,yPos/2,
+                    i*fixSize + fixSize + xPos,yPos/2+fixHeight);
+            tile1.draw(this.canvas);
+        }
+    }
+
+    private void createPlayer(){
+        Drawable playerSprite = getResources().getDrawable(R.drawable.player_1);
+        playerSprite.setBounds(200,(yPos/2) - fixHeight,
+                200+200,yPos/2);
+        playerSprite.draw(this.canvas);
+        playerDrawable = playerSprite;
+    }
+
+    private void createObstacles(){
+        Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
+        enemyDrawableList = new ArrayList<Drawable>();
+
+
+        for(int i = 0; i < 5; i++){
+            enemies.setBounds(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
+            enemies.draw(this.canvas);
+            enemyDrawableList.add(enemies);
+        }
+    }
+
+    private boolean playerHitEnemy(Drawable player, ArrayList<Drawable> enemyList){
+        return player.getBounds().intersect(enemyList.get(1).getBounds());
+    }
     public void clearCanvas(){
         canvas.drawColor(Color.WHITE);
         invalidate();
     }
+
     public void changeXPos(){
-        xPos += (dir * 10);
+        if(!playerHitEnemy(playerDrawable, enemyDrawableList) || dir == 1) {
+            if (xBoundaries > Math.abs(xPos + (dir * 50))) {
+                xPos += (dir * 50);
+            }
+            if (xPos > 0)
+                xPos = 0;
+        }
+
     }
 }
