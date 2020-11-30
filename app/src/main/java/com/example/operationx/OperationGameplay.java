@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import org.w3c.dom.Text;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,12 +29,14 @@ public class OperationGameplay extends AppCompatActivity {
     private ImageView level;
     private GameTile gameView;
     private Canvas canvas;
+
+    private ActionsFragment af;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
-        ActionsFragment af = new ActionsFragment();
+        af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
@@ -38,18 +44,10 @@ public class OperationGameplay extends AppCompatActivity {
         transaction.replace(R.id.game_info_panel, gif)
                 .commit();
 
-        createCanvas();
         createTileMap();
-        createPlayer();
         beginPlayerMovement();
     }
 
-    private void createCanvas(){
-
-    }
-    private void createPlayer(){
-        Player player = new Player(this,R.drawable.player_1);
-    }
 
 
     private void createTileMap(){
@@ -71,6 +69,7 @@ public class OperationGameplay extends AppCompatActivity {
                 gameView.changeXPos();
                 gameView.clearCanvas();
                 gameView.draw(canvas);
+                af.playerAction(gameView);
             }
         }, 0, 100);//put here time 1000 milliseconds=1 second
     }

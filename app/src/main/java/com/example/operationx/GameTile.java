@@ -45,25 +45,8 @@ public class GameTile extends View {
         setPreValues();
         containerActivity = currActivity;
         this.setBackgroundColor(0xFFFFFFFF);
-    }
 
-    private void createGameObjects(){
-        player = new Player(fixSize,fixWidth,fixHeight);
-        groundTile = new GroundTile();
-
-        // Later need to modify again
-        mapTiles = new MapTiles(fixSize,fixWidth,fixHeight);
-    }
-
-    private void setPreValues(){
-        fixSize = 200;
-        fixHeight = 200;
-        fixWidth = 200;
-        fixHeight = 200;
-        yPos = 1500;
-        xPos = 0;
-        dir = 0;
-        xBoundaries = fixSize * 14;
+        createEnemies();
     }
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
@@ -96,20 +79,20 @@ public class GameTile extends View {
         super.onDraw(canvas);
         this.canvas = canvas;
         createGroundTiles();
-        createObstacles();
+        //createEnemies();
+        updateEnemies();
         createPlayer();
     }
 
-    /*
-    private void drawAllObjects(){
-        ArrayList<Drawable> tileList = groundTile.getGroundTiles();
-        for(int i = 0; i < tileList.size(); i++){
-            Drawable tile = tileList.get(i);
-            tile.draw(canvas);
+    public int doAction(int actionID){
+        System.out.println(enemyList.size());
+        if(enemyList.get(0).playerAction(actionID)) {
+            enemyList.remove(0);
+            return 0;
         }
+        return actionID;
     }
 
-     */
     private void createGroundTiles(){
         Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
         for(int i = 0; i < 20; i++){
@@ -128,22 +111,39 @@ public class GameTile extends View {
         playerDrawable = playerSprite;
     }
 
-    private void createObstacles(){
+    private void updateEnemies(){
+        Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
+
+        for(int i = 0; i < 1; i++){
+            Rect currBoundaries = enemyList.get(i).getBoundary();
+            Rect newCurrBoundaries = new Rect();
+            newCurrBoundaries.set(currBoundaries.left + xPos, currBoundaries.top,
+                    currBoundaries.right + xPos, currBoundaries.bottom);
+            enemyList.get(i).setColliderBoundary(newCurrBoundaries);
+            enemies.setBounds(newCurrBoundaries);
+            enemies.draw(canvas);
+        }
+    }
+    private void createEnemies(){
         Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
         enemyList = new ArrayList<Enemy>();
 
-        for(int i = 3; i < 8; i++){
+        for(int i = 1; i < 7; i++){
             enemies.setBounds(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
-            enemies.draw(this.canvas);
-            Enemy newEnemy = new Enemy(enemies.getBounds());
+            Enemy newEnemy = new Enemy(0,enemies.getBounds());
             enemyList.add(newEnemy);
         }
+
     }
 
     private boolean playerHitEnemy(Drawable player, ArrayList<Enemy> enemyList){
         Enemy currEnemy = enemyList.get(0);
-        return player.getBounds().intersect(currEnemy.getBoundary());
+        boolean enemyEncountered = player.getBounds().intersect(currEnemy.getColliderBoundary());
+        if(enemyEncountered)
+            dir = 0;
+        return enemyEncountered;
     }
+
     public void clearCanvas(){
         canvas.drawColor(Color.WHITE);
         invalidate();
@@ -157,5 +157,25 @@ public class GameTile extends View {
             if (xPos > 0)
                 xPos = 0;
         }
+    }
+
+
+    private void createGameObjects(){
+        player = new Player(fixSize,fixWidth,fixHeight);
+        groundTile = new GroundTile();
+
+        // Later need to modify again
+        mapTiles = new MapTiles(fixSize,fixWidth,fixHeight);
+    }
+
+    private void setPreValues(){
+        fixSize = 200;
+        fixHeight = 200;
+        fixWidth = 200;
+        fixHeight = 200;
+        yPos = 1500;
+        xPos = 0;
+        dir = 0;
+        xBoundaries = fixSize * 14;
     }
 }

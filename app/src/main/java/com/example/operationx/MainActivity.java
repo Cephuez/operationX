@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.cephy_test_layout);
+        setContentView(R.layout.cephy_test_layout);
+        /*
         setContentView(R.layout.activity_main);
 
         MainMenuFragment mmFrag = new MainMenuFragment();
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_layout,
                 mmFrag);
         transaction.commit();
+
+         */
     }
 
     public void startGame(View view){

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,9 +62,41 @@ public class ActionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_actions, container, false);
-        //view.findViewById()
-
+        setUpActionButtons(view);
         return view;
     }
 
+    private int actionID = 0;
+    public void playerAction(GameTile gTile){
+        actionID = gTile.doAction(actionID);
+    }
+
+    private void setUpActionButtons(View view){
+        ImageView action1 = (ImageView) view.findViewById(R.id.primary_attack);
+        action1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Primary Attack");
+                actionID = 1;
+            }
+        });
+
+        ImageView action2 = (ImageView) view.findViewById(R.id.secondary_attack);
+        action2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Secondary Attack");
+                actionID = 2;
+            }
+        });
+
+        ImageView action3 = (ImageView) view.findViewById(R.id.third_attack);
+        action3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Third Attack");
+                actionID = 3;
+            }
+        });
+    }
 }
