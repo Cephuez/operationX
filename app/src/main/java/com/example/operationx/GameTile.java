@@ -79,7 +79,6 @@ public class GameTile extends View {
         super.onDraw(canvas);
         this.canvas = canvas;
         createGroundTiles();
-        //createEnemies();
         updateEnemies();
         createPlayer();
     }
@@ -144,8 +143,8 @@ public class GameTile extends View {
         return enemyEncountered;
     }
 
-    public void clearCanvas(){
-        canvas.drawColor(Color.WHITE);
+    public void clearCanvas(Canvas canvas){
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
     }
 
@@ -158,7 +157,6 @@ public class GameTile extends View {
                 xPos = 0;
         }
     }
-
 
     private void createGameObjects(){
         player = new Player(fixSize,fixWidth,fixHeight);
