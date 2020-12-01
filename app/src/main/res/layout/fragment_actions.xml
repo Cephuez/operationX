@@ -14,21 +14,21 @@
         android:id="@+id/primary_attack"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="#000"
+        android:src="@drawable/level_1_primary_attack"
         android:layout_margin="10dp"/>
 
     <ImageView
         android:id="@+id/secondary_attack"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="#000"
+        android:src="@drawable/level_1_secondary_attack"
         android:layout_margin="10dp"/>
 
     <ImageView
         android:id="@+id/third_attack"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="#000"
+        android:src="@drawable/level_1_third_attack"
         android:layout_margin="10dp"/>
 
 
