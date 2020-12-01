@@ -38,14 +38,16 @@ public class OperationGameplay extends AppCompatActivity {
 
         af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.action_layout, af);
-        transaction.replace(R.id.game_info_panel, gif)
-                .commit();
+
 
         createTileMap();
         beginPlayerMovement();
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.game_info_panel, gif);
+        transaction.replace(R.id.action_layout, af);
+
+        transaction.commit();
     }
 
 

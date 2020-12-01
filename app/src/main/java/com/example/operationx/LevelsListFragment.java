@@ -28,7 +28,7 @@ import java.util.HashMap;
  */
 public class LevelsListFragment extends Fragment {
     ArrayList<GameLevel> levels = new ArrayList<>();
-    GameLevel level1 = new GameLevel("Cat Level", 1);
+    GameLevel level1 = new GameLevel("Escape Level", 1);
     GameLevel level2 = new GameLevel("Plane Level", 2);
     GameLevel level3 = new GameLevel("Pug Level", 3);
 

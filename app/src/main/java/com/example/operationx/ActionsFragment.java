@@ -66,6 +66,9 @@ public class ActionsFragment extends Fragment {
         return view;
     }
 
+
+
+
     private int actionID = 0;
     public void playerAction(GameTile gTile){
         actionID = gTile.doAction(actionID);
