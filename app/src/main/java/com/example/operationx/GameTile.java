@@ -26,7 +26,7 @@ public class GameTile extends View {
     public Activity containerActivity = null;
     private Canvas gameCanvas;
     private Bitmap canvasBitmap;
-    private int fixSize,fixWidth,fixHeight;
+    private int fixSize,fixWidth,fixHeight, fixWidthBackground;
     private int dir;
     private int xBoundaries;
     public int xPos, yPos;
@@ -78,6 +78,7 @@ public class GameTile extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         this.canvas = canvas;
+        createBackgroundTiles();
         createGroundTiles();
         updateEnemies();
         createPlayer();
@@ -91,26 +92,43 @@ public class GameTile extends View {
         return actionID;
     }
 
+    private void createBackgroundTiles(){
+        Drawable background = getResources().getDrawable(R.drawable.level_1_background);
+        for(int i = 0; i < 10; i++){
+            background.setBounds(i*fixWidthBackground+xPos, 0,
+                    i * fixWidthBackground + fixWidthBackground + xPos, yPos/2);
+            background.draw(canvas);
+        }
+    }
     private void createGroundTiles(){
         Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
+        Drawable tile2 = getResources().getDrawable(R.drawable.ground_tile_2);
         for(int i = 0; i < 20; i++){
             tile1.setBounds(i*fixSize + xPos,yPos/2,
                     i*fixSize + fixSize + xPos,yPos/2+fixHeight);
             groundTile.addGroundTile(containerActivity,tile1.getBounds());
             tile1.draw(canvas);
         }
+
+        for(int i = 1; i < 3; i++) {
+            for (int j = 0; j < 20; j++) {
+                tile2.setBounds(j * fixSize + xPos, (yPos / 2) + fixHeight * i,
+                        j * fixSize + fixSize + xPos, yPos / 2 + fixHeight * i + fixHeight );
+                groundTile.addGroundTile(containerActivity, tile1.getBounds());
+                tile2.draw(canvas);
+            }
+        }
     }
 
     private void createPlayer(){
-        Drawable playerSprite = getResources().getDrawable(R.drawable.player_1);
-        playerSprite.setBounds(200,(yPos/2) - fixHeight,
-                200+200,yPos/2);
+        Drawable playerSprite = getResources().getDrawable(R.drawable.player_11);
+        playerSprite.setBounds(150,(yPos/2) - fixHeight,
+                150+150,yPos/2);
         playerSprite.draw(this.canvas);
         playerDrawable = playerSprite;
     }
 
     private void updateEnemies(){
-
         for(int i = 0; i < enemyList.size(); i++){
             Enemy currEnemy = enemyList.get(i);
             Rect currBoundaries = currEnemy.getBoundary();
@@ -135,16 +153,12 @@ public class GameTile extends View {
     }
 
     private void createEnemies(){
-        Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
         enemyList = new ArrayList<Enemy>();
-
         for(int i = 1; i < 7; i++){
             int enemyID = 0;
-            enemies.setBounds(500*i + xPos,(yPos/2) - fixHeight,(500*i + fixWidth) + xPos,(yPos/2));
-
-            if(i % 2 == 0)
-                enemyID = 2;
-            Enemy newEnemy = new Enemy(enemyID,enemies.getBounds());
+            Rect bounds = new Rect(500*i + xPos,(yPos/2) - fixHeight,(500*i + fixWidth) + xPos,(yPos/2));
+            enemyID = i % 3;
+            Enemy newEnemy = new Enemy(enemyID,bounds);
             enemyList.add(newEnemy);
         }
 
@@ -167,7 +181,6 @@ public class GameTile extends View {
 
     public void changeXPos(){
         if(!playerHitEnemy(playerDrawable, enemyList) || dir == 1) {
-            System.out.println("XD");
             if (xBoundaries > Math.abs(xPos + (dir * 50))) {
                 xPos += (dir * 50);
             }
@@ -185,10 +198,11 @@ public class GameTile extends View {
     }
 
     private void setPreValues(){
-        fixSize = 200;
-        fixHeight = 200;
-        fixWidth = 200;
-        fixHeight = 200;
+        fixSize = 300;
+        fixHeight = 300;
+        fixWidth = 300;
+        fixHeight = 300;
+        fixWidthBackground = 600;
         yPos = 1500;
         xPos = 0;
         dir = 0;

@@ -41,12 +41,13 @@ public class Enemy {
 
     private void enemyWeakness(){
         if(enemyID == 0) {
-            weakness.add(2);
-        }else if(enemyID == 1){
             weakness.add(1);
+            weakness.add(2);
+            weakness.add(3);
+        }else if(enemyID == 1){
             weakness.add(2);
         }else{
-            weakness.add(1);
+            weakness.add(2);
             weakness.add(3);
         }
     }
