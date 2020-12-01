@@ -35,11 +35,14 @@ public class Enemy {
         return colliderBoundary;
     }
 
+    public int getEnemyID(){
+        return enemyID;
+    }
 
     private void enemyWeakness(){
         if(enemyID == 0) {
             weakness.add(2);
-        }else if(enemyID == 2){
+        }else if(enemyID == 1){
             weakness.add(1);
             weakness.add(2);
         }else{

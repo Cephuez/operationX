@@ -54,19 +54,13 @@ public class OperationGameplay extends AppCompatActivity {
         gameView = new GameTile(this);
 
         FrameLayout gameLayout = findViewById(R.id.game_view);
-        /*
+
         Bitmap result = Bitmap.createBitmap(500,500,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(result);
 
         gameView.draw(canvas);
         gameView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1500));
 
-         */
-        Bitmap result = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(result);
-
-        gameView.draw(canvas);
-        gameView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
         gameLayout.addView(gameView);
     }
 

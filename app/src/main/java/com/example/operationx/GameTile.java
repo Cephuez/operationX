@@ -84,8 +84,7 @@ public class GameTile extends View {
     }
 
     public int doAction(int actionID){
-        System.out.println(enemyList.size());
-        if(enemyList.get(0).playerAction(actionID)) {
+        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)) {
             enemyList.remove(0);
             return 0;
         }
@@ -111,31 +110,49 @@ public class GameTile extends View {
     }
 
     private void updateEnemies(){
-        Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
 
-        for(int i = 0; i < 1; i++){
-            Rect currBoundaries = enemyList.get(i).getBoundary();
+        for(int i = 0; i < enemyList.size(); i++){
+            Enemy currEnemy = enemyList.get(i);
+            Rect currBoundaries = currEnemy.getBoundary();
             Rect newCurrBoundaries = new Rect();
             newCurrBoundaries.set(currBoundaries.left + xPos, currBoundaries.top,
                     currBoundaries.right + xPos, currBoundaries.bottom);
-            enemyList.get(i).setColliderBoundary(newCurrBoundaries);
+            currEnemy.setColliderBoundary(newCurrBoundaries);
+            Drawable enemies = drawEnemy(currEnemy.getEnemyID());
             enemies.setBounds(newCurrBoundaries);
             enemies.draw(canvas);
         }
     }
+
+    private Drawable drawEnemy(int enemyID){
+        Drawable enemies = null;
+        if(enemyID == 0){
+            enemies = getResources().getDrawable(R.drawable.enemy1);
+        }else{
+            enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
+        }
+        return enemies;
+    }
+
     private void createEnemies(){
         Drawable enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
         enemyList = new ArrayList<Enemy>();
 
         for(int i = 1; i < 7; i++){
-            enemies.setBounds(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
-            Enemy newEnemy = new Enemy(0,enemies.getBounds());
+            int enemyID = 0;
+            enemies.setBounds(500*i + xPos,(yPos/2) - fixHeight,(500*i + fixWidth) + xPos,(yPos/2));
+
+            if(i % 2 == 0)
+                enemyID = 2;
+            Enemy newEnemy = new Enemy(enemyID,enemies.getBounds());
             enemyList.add(newEnemy);
         }
 
     }
 
     private boolean playerHitEnemy(Drawable player, ArrayList<Enemy> enemyList){
+        if(enemyList.isEmpty())
+            return false;
         Enemy currEnemy = enemyList.get(0);
         boolean enemyEncountered = player.getBounds().intersect(currEnemy.getColliderBoundary());
         if(enemyEncountered)
@@ -150,6 +167,7 @@ public class GameTile extends View {
 
     public void changeXPos(){
         if(!playerHitEnemy(playerDrawable, enemyList) || dir == 1) {
+            System.out.println("XD");
             if (xBoundaries > Math.abs(xPos + (dir * 50))) {
                 xPos += (dir * 50);
             }
