@@ -146,22 +146,32 @@ public class GameTile extends View {
         Drawable enemies = null;
         if(enemyID == 0){
             enemies = getResources().getDrawable(R.drawable.enemy1);
+        }else if(enemyID == 1){
+            enemies = getResources().getDrawable(R.drawable.enemy_robot_dog);
         }else{
-            enemies = getResources().getDrawable(R.drawable.test_enemy_sprite);
+            enemies = getResources().getDrawable(R.drawable.obstacle_fence);
         }
         return enemies;
     }
 
     private void createEnemies(){
         enemyList = new ArrayList<Enemy>();
-        for(int i = 1; i < 7; i++){
-            int enemyID = 0;
-            Rect bounds = new Rect(500*i + xPos,(yPos/2) - fixHeight,(500*i + fixWidth) + xPos,(yPos/2));
-            enemyID = i % 3;
-            Enemy newEnemy = new Enemy(enemyID,bounds);
+        for(int i = 1; i < 3; i++){
+            Rect bounds = new Rect(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
+            Enemy newEnemy = new Enemy(0,bounds);
+            enemyList.add(newEnemy);
+        }
+        for(int i = 3; i < 7; i++){
+            Rect bounds = new Rect(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
+            Enemy newEnemy = new Enemy(1,bounds);
             enemyList.add(newEnemy);
         }
 
+        for(int i = 7; i < 8; i++){
+            Rect bounds = new Rect(700*i + xPos,(yPos/2) - fixHeight,(700*i + fixWidth) + xPos,(yPos/2));
+            Enemy newEnemy = new Enemy(2,bounds);
+            enemyList.add(newEnemy);
+        }
     }
 
     private boolean playerHitEnemy(Drawable player, ArrayList<Enemy> enemyList){
@@ -206,6 +216,6 @@ public class GameTile extends View {
         yPos = 1500;
         xPos = 0;
         dir = 0;
-        xBoundaries = fixSize * 14;
+        xBoundaries = fixSize * 18;
     }
 }

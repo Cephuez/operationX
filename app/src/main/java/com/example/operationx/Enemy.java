@@ -46,9 +46,9 @@ public class Enemy {
             weakness.add(3);
         }else if(enemyID == 1){
             weakness.add(2);
+            weakness.add(3);
         }else{
             weakness.add(2);
-            weakness.add(3);
         }
     }
 
