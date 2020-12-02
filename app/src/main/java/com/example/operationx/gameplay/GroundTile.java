@@ -1,4 +1,4 @@
-package com.example.operationx;
+package com.example.operationx.gameplay;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.operationx.R;
 
 import java.util.ArrayList;
 

@@ -1,15 +1,15 @@
 package com.example.operationx;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.operationx.gameplay.OperationGameplay;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<GameLevel> levels = new ArrayList<>();

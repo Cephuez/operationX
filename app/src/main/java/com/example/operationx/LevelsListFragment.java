@@ -1,7 +1,5 @@
 package com.example.operationx;
 
-import android.app.Activity;
-import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,8 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.example.operationx.gameplay.OperationGameplay;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;

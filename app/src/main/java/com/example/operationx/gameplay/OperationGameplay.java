@@ -1,24 +1,19 @@
-package com.example.operationx;
+package com.example.operationx.gameplay;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.w3c.dom.Text;
+import com.example.operationx.ActionsFragment;
+import com.example.operationx.GameInfoFragment;
+import com.example.operationx.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,8 +48,7 @@ public class OperationGameplay extends AppCompatActivity {
 
 
     private void createTileMap(){
-        gameView = new GameTile(this);
-
+        gameView = new GameTile(this,1);
         FrameLayout gameLayout = findViewById(R.id.game_view);
 
         Bitmap result = Bitmap.createBitmap(500,500,Bitmap.Config.ARGB_8888);

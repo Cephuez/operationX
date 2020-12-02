@@ -1,8 +1,6 @@
-package com.example.operationx;
+package com.example.operationx.gameplay;
 
-import android.media.Image;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class Player {
 

@@ -1,4 +1,4 @@
-package com.example.operationx;
+package com.example.operationx.gameplay;
 
 public class MapTiles {
 

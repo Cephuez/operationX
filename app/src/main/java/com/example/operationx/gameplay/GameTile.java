@@ -1,52 +1,48 @@
-package com.example.operationx;
+package com.example.operationx.gameplay;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.service.quicksettings.Tile;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-import androidx.constraintlayout.motion.widget.Debug;
-import androidx.fragment.app.Fragment;
+import com.example.operationx.R;
+import com.example.operationx.gameplay.Enemy;
+import com.example.operationx.gameplay.GroundTile;
+import com.example.operationx.gameplay.MapTiles;
+import com.example.operationx.gameplay.Player;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GameTile extends View {
     public Activity containerActivity = null;
-    private Canvas gameCanvas;
-    private Bitmap canvasBitmap;
     private int fixSize,fixWidth,fixHeight, fixWidthBackground;
     private int dir;
     private int xBoundaries;
     public int xPos, yPos;
     private Canvas canvas;
 
-    private Player player;
-    private GroundTile groundTile;
-    private MapTiles mapTiles;
-
     private Drawable playerDrawable;
     private ArrayList<Enemy> enemyList;
 
-    public GameTile(Activity currActivity){
+    private Player player;
+    private Enemy enemy;
+    private BackgroundTiles backgroundTiles;
+    private GroundTile groundTile;
+
+    public GameTile(Activity currActivity,int levelID){
         super(currActivity);
-        createGameObjects();
+        setLevel();
         setPreValues();
         containerActivity = currActivity;
         this.setBackgroundColor(0xFFFFFFFF);
 
         createEnemies();
+        //createBackgroundTiles();
     }
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
@@ -100,6 +96,7 @@ public class GameTile extends View {
             background.draw(canvas);
         }
     }
+
     private void createGroundTiles(){
         Drawable tile1 = getResources().getDrawable(R.drawable.ground_tile_1);
         Drawable tile2 = getResources().getDrawable(R.drawable.ground_tile_2);
@@ -121,6 +118,7 @@ public class GameTile extends View {
     }
 
     private void createPlayer(){
+        player = new Player(fixSize,fixWidth,fixHeight);
         Drawable playerSprite = getResources().getDrawable(R.drawable.player_11);
         playerSprite.setBounds(150,(yPos/2) - fixHeight,
                 150+150,yPos/2);
@@ -199,12 +197,11 @@ public class GameTile extends View {
         }
     }
 
-    private void createGameObjects(){
-        player = new Player(fixSize,fixWidth,fixHeight);
+    private void setLevel(){
+        createPlayer();
+        backgroundTiles = new BackgroundTiles();
         groundTile = new GroundTile();
 
-        // Later need to modify again
-        mapTiles = new MapTiles(fixSize,fixWidth,fixHeight);
     }
 
     private void setPreValues(){
