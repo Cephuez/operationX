@@ -1,17 +1,26 @@
 package com.example.operationx;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +29,7 @@ import android.widget.TextView;
  */
 public class GameInfoFragment extends Fragment {
     private GameOptionsViewModel model;
+    private final String[] pauseOptions = {"Resume", "Settings", "Main Menu",};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,21 +78,47 @@ public class GameInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_info, container, false);
 
         model = new ViewModelProvider(requireActivity()).get(GameOptionsViewModel.class);
+        ImageView mapView = view.findViewById(R.id.pause_button);
+
+        //registerForContextMenu(mapView);
+
+
 
         addOnclick(view);
         setObservers(view);
         return view;
     }
 
+   /* @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.pause_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.settings_pause:
+                System.out.print("pressed settings");
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }*/
+
+
     public void setObservers(View view){
-        final ImageView livesBox = (ImageView) view.findViewById(R.id.lives_box);
+        final TextView livesBox =  view.findViewById(R.id.lives_box);
         // Create the observer which updates the UI.
         final Observer<Integer> currLivesObserver = new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable final Integer lives) {
                 // Update the UI, in this case, a TextView.
                 System.out.println("lives = " + lives);
-                livesBox.setImageResource(R.drawable.operation_x_logo);
+                //livesBox.setImageResource(R.drawable.operation_x_logo);
             }
         };
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -103,10 +139,14 @@ public class GameInfoFragment extends Fragment {
 
 
 
+
+
+
+
     }
 
     public void addOnclick(View view) {
-        ImageView livesBox = view.findViewById(R.id.lives_box);
+        TextView livesBox = view.findViewById(R.id.lives_box);
 
         livesBox.setOnClickListener(new View.OnClickListener() {
 
@@ -115,5 +155,28 @@ public class GameInfoFragment extends Fragment {
                 model.getCurrentLives().setValue(2);
             }
         });
+
+
+        ImageView pause = view.findViewById(R.id.pause_button);
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("PAUSED");
+                builder.setItems(pauseOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.out.println(which);
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
+
     }
 }

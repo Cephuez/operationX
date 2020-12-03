@@ -9,6 +9,11 @@ public class GameOptionsViewModel extends ViewModel {
     private MutableLiveData<Integer> currentLevel;
     private MutableLiveData<Boolean> mapPressed;
     private MutableLiveData<Boolean> pausePressed;
+    private MutableLiveData<Integer> currentPrimary;
+    private MutableLiveData<Integer> currentSecondary;
+    private MutableLiveData<Integer> currentThird;
+    private MutableLiveData<Integer> currentActionId;
+
 
     public MutableLiveData<Integer> getCurrentLives() {
         if(currentLives == null) {
@@ -36,6 +41,31 @@ public class GameOptionsViewModel extends ViewModel {
             pausePressed = new MutableLiveData<>();
         }
         return pausePressed;
+    }
+
+    public MutableLiveData<Integer> getCurrentPrimary() {
+        if(currentPrimary == null) {
+            currentPrimary = new MutableLiveData<>();
+        }
+        return currentPrimary;
+    }
+    public MutableLiveData<Integer> getCurrentSecondary() {
+        if(currentSecondary == null) {
+            currentSecondary = new MutableLiveData<>();
+        }
+        return currentSecondary;
+    }
+    public MutableLiveData<Integer> getCurrentThird() {
+        if(currentThird == null) {
+            currentThird = new MutableLiveData<>();
+        }
+        return currentThird;
+    }
+    public MutableLiveData<Integer> getCurrentActionId() {
+        if(currentActionId == null) {
+            currentActionId = new MutableLiveData<>();
+        }
+        return currentActionId;
     }
 
 

@@ -8,13 +8,13 @@
     android:gravity="center">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
+    <TextView
         android:id="@+id/lives_box"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
         android:layout_margin="2dp"/>
-    <ImageView
+    <TextView
         android:id="@+id/level_box"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -25,11 +25,13 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
-        android:layout_margin="2dp"/>
+        android:layout_margin="2dp"
+        android:src="@drawable/map"/>
     <ImageView
         android:id="@+id/pause_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
-        android:layout_margin="2dp"/>
+        android:layout_margin="2dp"
+        android:src="@drawable/pause"/>
 </LinearLayout>
