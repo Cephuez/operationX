@@ -26,6 +26,7 @@ public class OperationGameplay extends AppCompatActivity {
     private Canvas canvas;
 
     private ActionsFragment af;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +34,9 @@ public class OperationGameplay extends AppCompatActivity {
 
         af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
+        createTileMap(getIntent().getExtras().getInt("LEVEL_INT"));
+        beginPlayerMovement();
 
-
-        //createTileMap();
-       // beginPlayerMovement();
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.game_info_panel, gif);
@@ -45,13 +45,10 @@ public class OperationGameplay extends AppCompatActivity {
         transaction.commit();
 
         System.out.println("Current LEVEL_INT: " + getIntent().getExtras().getInt("LEVEL_INT"));
-
     }
 
-
-
-    private void createTileMap(){
-        gameView = new GameTile(this,1);
+    private void createTileMap(int levelID){
+        gameView = new GameTile(this,levelID);
         FrameLayout gameLayout = findViewById(R.id.game_view);
 
         Bitmap result = Bitmap.createBitmap(500,500,Bitmap.Config.ARGB_8888);
