@@ -1,11 +1,13 @@
 package com.example.operationx;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -29,7 +31,8 @@ import org.w3c.dom.Text;
  */
 public class GameInfoFragment extends Fragment {
     private GameOptionsViewModel model;
-    private final String[] pauseOptions = {"Resume", "Settings", "Main Menu",};
+    private final String[] pauseOptions = {"Resume", "Settings", "Main Menu"};
+    private final String[] settingsOptions = {"Volume", "Game FPS", "Redeem"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,21 +78,17 @@ public class GameInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_game_info, container, false);
+        final View view = inflater.inflate(R.layout.fragment_game_info, container, false);
 
         model = new ViewModelProvider(requireActivity()).get(GameOptionsViewModel.class);
-        ImageView mapView = view.findViewById(R.id.pause_button);
-
-        //registerForContextMenu(mapView);
-
-
-
+        ImageView mapView = view.findViewById(R.id.map_button);
+        registerForContextMenu(mapView);
         addOnclick(view);
         setObservers(view);
         return view;
     }
 
-   /* @Override
+   /*@Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
@@ -136,13 +135,6 @@ public class GameInfoFragment extends Fragment {
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
         model.getCurrentLevel().observe(requireActivity(), currLevelObserver);
 
-
-
-
-
-
-
-
     }
 
     public void addOnclick(View view) {
@@ -163,13 +155,32 @@ public class GameInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
+                //Pause the game animation here... <-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("PAUSED");
                 builder.setItems(pauseOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        System.out.println(which);
+                        if(which == 0){
+                            System.out.println("Resume the game animation");
+                        }else if(which == 1){
+                            /*System.out.println("Start the settings fragment");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("SETTINGS");
+                            builder.setItems(settingsOptions, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    System.out.println("Launch settings alert menu");
+                                }
+                            });
+                            builder.show();*/
+
+                        }else if(which == 2){
+                            System.out.println("Go to main menu");
+                            MainMenuFragment mmFrag = new MainMenuFragment();
+                            FragmentManager fm = getParentFragmentManager();
+                            fm.beginTransaction().replace(R.id.MainMenu, mmFrag).commit();
+                        }
                     }
                 });
                 builder.show();

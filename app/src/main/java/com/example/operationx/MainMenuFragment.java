@@ -1,8 +1,12 @@
 package com.example.operationx;
 
+import android.content.DialogInterface;
+import android.icu.util.Freezable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +21,7 @@ import java.util.logging.Level;
  * create an instance of this fragment.
  */
 public class MainMenuFragment extends Fragment {
-
+    private final String[] settingsOptions = {"Volume", "Game FPS", "Redeem"};
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,6 +67,13 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+        setButtons(view);
+
+        return view;
+    }
+
+    public void setButtons(View view){
         Button levelButton = (Button) view.findViewById(R.id.level_button);
         levelButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -75,6 +86,29 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-        return view;
+        Button settings = view.findViewById(R.id.settings_button);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("SETTINGS");
+                builder.setItems(settingsOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();*/
+                System.out.println("Launch settings alert menu");
+                SettingsFragment sf = new SettingsFragment();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.main_menu_frag, sf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
     }
+
 }
