@@ -35,8 +35,8 @@ public class OperationGameplay extends AppCompatActivity {
         GameInfoFragment gif = new GameInfoFragment();
 
 
-        //createTileMap();
-       // beginPlayerMovement();
+        createTileMap();
+        beginPlayerMovement();
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.game_info_panel, gif);
