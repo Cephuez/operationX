@@ -101,16 +101,16 @@ public class LevelsListFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                 Intent intent = new Intent(getActivity(), OperationGameplay.class);
+                GameLevel level = levels.get(i);
+                intent.putExtra("LEVEL_INT", level.level);
+                System.out.println("************ LEVEL: " + level.level);
+
                 startActivity(intent);
             }
         });
-
-
-
-
-
-
         return view;
     }
 }

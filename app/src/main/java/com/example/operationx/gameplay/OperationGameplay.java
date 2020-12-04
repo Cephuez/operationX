@@ -35,14 +35,17 @@ public class OperationGameplay extends AppCompatActivity {
         GameInfoFragment gif = new GameInfoFragment();
 
 
-        createTileMap();
-        beginPlayerMovement();
+        //createTileMap();
+       // beginPlayerMovement();
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.game_info_panel, gif);
         transaction.replace(R.id.action_layout, af);
 
         transaction.commit();
+
+        System.out.println("Current LEVEL_INT: " + getIntent().getExtras().getInt("LEVEL_INT"));
+
     }
 
 
