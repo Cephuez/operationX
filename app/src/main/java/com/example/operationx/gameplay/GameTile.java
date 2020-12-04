@@ -80,7 +80,7 @@ public class GameTile extends View {
     }
 
     public int doAction(int actionID){
-        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)) {
+        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID) && player.doAction(actionID)) {
             enemyList.remove(0);
             return 0;
         }
