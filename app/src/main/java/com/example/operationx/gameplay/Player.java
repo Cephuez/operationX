@@ -11,20 +11,24 @@ import com.example.operationx.R;
 
 public class Player {
 
-    private int spriteID;
     private Drawable playerSprite;
     private Activity currActivity;
 
     private int width, height, gameViewHeight, levelID;
+    private Inventory inventory;
 
     public Player(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
-        System.out.println(currActivity);
         this.currActivity = currActivity;
         this.width = width;
         this.height = height;
         this.gameViewHeight = gameViewHeight;
         this.levelID = levelID;
+        inventory = new Inventory(currActivity, levelID);
         setPlayerBoundaries();
+    }
+
+    public boolean doAction(int actionID){
+        return inventory.useItem(actionID);
     }
 
     public void movePlayer(Canvas canvas){
