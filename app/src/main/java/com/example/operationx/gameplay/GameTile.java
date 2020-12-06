@@ -108,7 +108,7 @@ public class GameTile extends View {
 
     public void changeXPos(){
         if(!playerHitEnemy(enemyList) && dir == -1
-                && xPos > -100) {
+                && xPos < 100) {
             System.out.println(xPos);
             xPos -= (dir * 50);
         }//else{
