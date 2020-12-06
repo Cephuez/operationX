@@ -69,9 +69,9 @@ public class OperationGameplay extends AppCompatActivity {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                gameView.changeXPos();
                 gameView.clearCanvas(canvas);
                 gameView.draw(canvas);
+                gameView.changeXPos();
                 af.playerAction(gameView);
             }
         }, 0, 100);//put here time 1000 milliseconds=1 second

@@ -33,6 +33,7 @@ public class BackgroundTiles {
                     i * fixWidthBackground + fixWidthBackground + xPos, gameViewHeight/2);
             background.draw(canvas);
         }
+
     }
 
     private void backgroundLevelTwo(Canvas canvas, int xPos){

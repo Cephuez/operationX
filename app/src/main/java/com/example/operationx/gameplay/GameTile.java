@@ -34,6 +34,7 @@ public class GameTile extends View {
     private BackgroundTiles backgroundTiles;
     private GroundTile groundTile;
     private EnemyList enemyList;
+    private LevelBoundaries levelBoundaries;
 
     public GameTile(Activity currActivity, int levelID){
         super(currActivity);
@@ -59,9 +60,9 @@ public class GameTile extends View {
                 float deltaX = x2 - x1;
                 if (Math.abs(deltaX) <= 100) {
                     dir = 0;
-                } else if (deltaX < MIN_DISTANCE && xPos <= 0) {
+                } else if (deltaX < MIN_DISTANCE) {
                     dir = -1;
-                } else if (deltaX > MIN_DISTANCE && xPos <= 0) {
+                } else if (deltaX > MIN_DISTANCE) {
                     dir = 1;
                 }
                 break;
@@ -76,15 +77,18 @@ public class GameTile extends View {
         groundTile.displayGroundTiles(canvas, xPos);
         backgroundTiles.updateBackground(canvas, xPos);
         enemyList.updateEnemies(canvas, xPos);
+        levelBoundaries.displayBoundaries(canvas,xPos);
         player.movePlayer(canvas);
     }
 
     public int doAction(int actionID){
-        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID) && player.doAction(actionID)) {
+        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
+                 && playerHitEnemy(enemyList) && player.doAction(actionID)) {
+            System.out.println("hit");
             enemyList.remove(0);
             return 0;
         }
-        return actionID;
+        return 0;
     }
 
     private boolean playerHitEnemy(EnemyList enemyList){
@@ -103,13 +107,12 @@ public class GameTile extends View {
     }
 
     public void changeXPos(){
-        if(!playerHitEnemy(enemyList) || dir == 1) {
-            if (xBoundaries > Math.abs(xPos + (dir * 50))) {
-                xPos += (dir * 50);
-            }
-            if (xPos > 0)
-                xPos = 0;
-        }
+        if(!playerHitEnemy(enemyList) && dir == -1
+                && xPos > -100) {
+            System.out.println(xPos);
+            xPos -= (dir * 50);
+        }//else{
+        //   xPos += (dir * 50);
     }
 
     private void setLevel(){
@@ -117,6 +120,7 @@ public class GameTile extends View {
         enemyList = new EnemyList(containerActivity,fixWidth,fixHeight,gameViewHeight, levelID);
         backgroundTiles = new BackgroundTiles(containerActivity,fixWidthBackground,gameViewHeight,levelID);
         groundTile = new GroundTile(containerActivity,fixWidth,fixHeight,gameViewHeight,levelID);
+        levelBoundaries = new LevelBoundaries(containerActivity,fixWidth,fixHeight,gameViewHeight,levelID);
     }
 
     private void setPreValues(){
