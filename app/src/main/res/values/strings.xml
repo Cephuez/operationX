@@ -12,4 +12,9 @@
     <string name="done">DONE</string>
     <string name="saved_volume_key">OPERATIONX_VOLUME_KEY</string>
     <string name="saved_fps_key">OPERATIONX_GAME_FPS_KEY</string>
+    <string name="share_message">
+        Hi there, please try our game, pretty please? We are poor
+        indie game developers and we would love for you to play and share if you like
+        the game. Make us rich so we can improve the game!
+    </string>
 </resources>
