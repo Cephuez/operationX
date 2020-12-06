@@ -97,8 +97,6 @@ public class LevelsListFragment extends Fragment {
 
         simpleListView.setAdapter(simpleAdapter);
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            JSONObject clicked;
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 

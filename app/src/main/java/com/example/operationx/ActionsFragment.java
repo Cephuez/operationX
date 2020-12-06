@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.operationx.gameplay.GameTile;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +79,7 @@ public class ActionsFragment extends Fragment {
     }
 
     private void setUpActionButtons(View view){
-        ImageView action1 = (ImageView) view.findViewById(R.id.primary_attack);
+        TextView action1 = view.findViewById(R.id.primary_attack);
         action1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +88,7 @@ public class ActionsFragment extends Fragment {
             }
         });
 
-        ImageView action2 = (ImageView) view.findViewById(R.id.secondary_attack);
+        TextView action2 = view.findViewById(R.id.secondary_attack);
         action2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +97,7 @@ public class ActionsFragment extends Fragment {
             }
         });
 
-        ImageView action3 = (ImageView) view.findViewById(R.id.third_attack);
+        TextView action3 = view.findViewById(R.id.third_attack);
         action3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
