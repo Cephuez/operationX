@@ -13,13 +13,21 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
-        android:layout_margin="2dp"/>
+        android:layout_margin="2dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/level_box"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
-        android:layout_margin="2dp"/>
+        android:layout_margin="2dp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"/>
     <ImageView
         android:id="@+id/map_button"
         android:layout_width="100dp"

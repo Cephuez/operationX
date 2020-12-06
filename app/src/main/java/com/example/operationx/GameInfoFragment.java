@@ -74,17 +74,27 @@ public class GameInfoFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_game_info, container, false);
+        Bundle bundle = this.getArguments();
+        int level = 0;
+        if (bundle != null) {
+            level = bundle.getInt("LEVEL_FRAG_INT");
+        }
+
+        int lives = 3;
 
         model = new ViewModelProvider(requireActivity()).get(GameOptionsViewModel.class);
         ImageView mapView = view.findViewById(R.id.map_button);
         registerForContextMenu(mapView);
         addOnclick(view);
         setObservers(view);
+        model.getCurrentLevel().setValue(level);
+        model.getCurrentLives().setValue(lives);
         return view;
     }
 
@@ -111,13 +121,14 @@ public class GameInfoFragment extends Fragment {
 
     public void setObservers(View view){
         final TextView livesBox =  view.findViewById(R.id.lives_box);
+        final TextView levelBox = view.findViewById(R.id.level_box);
         // Create the observer which updates the UI.
         final Observer<Integer> currLivesObserver = new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable final Integer lives) {
                 // Update the UI, in this case, a TextView.
                 System.out.println("lives = " + lives);
-                //livesBox.setImageResource(R.drawable.operation_x_logo);
+                livesBox.setText("Lives\n" + lives);
             }
         };
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -129,7 +140,7 @@ public class GameInfoFragment extends Fragment {
                 // Update the UI, in this case, a TextView.
                 System.out.println("level = " + level);
                 //Code to update level here ****
-
+                levelBox.setText("Level\n" + 1);
             }
         };
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -174,12 +185,18 @@ public class GameInfoFragment extends Fragment {
                                 }
                             });
                             builder.show();*/
+                            SettingsFragment sf = new SettingsFragment();
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            fm.beginTransaction()
+                                    .replace(R.id.game_layout, sf)
+                                    .addToBackStack(null)
+                                    .commit();
 
                         }else if(which == 2){
                             System.out.println("Go to main menu");
                             MainMenuFragment mmFrag = new MainMenuFragment();
                             FragmentManager fm = getParentFragmentManager();
-                            fm.beginTransaction().replace(R.id.MainMenu, mmFrag).commit();
+                            fm.beginTransaction().replace(R.id.game_layout, mmFrag).commit();
                         }
                     }
                 });

@@ -1,5 +1,7 @@
 package com.example.operationx;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +66,71 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        SeekBar sBar = (SeekBar) view.findViewById(R.id.volumeSeekBar);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
+        //SeekBar saves the volume setting
+        sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int volume = 50;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                volume = progress;
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //write custom code to on start progress
+                //Override needed for interface
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                System.out.println(volume + "/" + seekBar.getMax());
+                editor.putInt(getString(R.string.saved_volume_key), volume);
+                editor.apply();
+
+
+            }
+        });
+
+        final TextView normal = view.findViewById(R.id.normalSetting);
+        final TextView fast = view.findViewById(R.id.fastSetting);
+        //Save fps to normal
+        normal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TextView tv = (TextView) v;
+                normal.setTextColor(getResources().getColor(R.color.gameFPSColor));
+                fast.setTextColor(getResources().getColor(android.R.color.primary_text_light));
+                editor.putInt(getString(R.string.saved_fps_key), 1);
+                editor.apply();
+            }
+        });
+        //Save fps to fast
+        fast.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                fast.setTextColor(getResources().getColor(R.color.gameFPSColor));
+                normal.setTextColor(getResources().getColor(android.R.color.primary_text_light));
+                //add FPS speed in shared preferences
+                editor.putInt(getString(R.string.saved_fps_key), 2);
+                editor.apply();
+            }
+        });
+
+        //Go back to the previous fragment, in this case the MainMenuFragment
+        Button done = view.findViewById(R.id.doneButton);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Save settings to shared preferences and close fragment
+
+                System.out.println("Popped");
+                requireActivity().getSupportFragmentManager().popBackStack();
+
+            }
+        });
+        return view;
     }
 }
