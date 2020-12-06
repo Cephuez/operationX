@@ -40,6 +40,7 @@
             android:background="#A1E2FF"/>
 
         <Button
+            android:id="@+id/share_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="@string/share_with_friends"

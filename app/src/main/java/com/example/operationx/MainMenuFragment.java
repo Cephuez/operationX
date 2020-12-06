@@ -109,6 +109,19 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+
+        Button share = view.findViewById(R.id.share_button);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareFragment shareFrag = new ShareFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_menu_frag, shareFrag, "shareFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
     }
 
 }
