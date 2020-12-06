@@ -26,11 +26,12 @@ public class OperationGameplay extends AppCompatActivity {
     private Canvas canvas;
 
     private ActionsFragment af;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
+        System.out.println("XD");
 
         af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
