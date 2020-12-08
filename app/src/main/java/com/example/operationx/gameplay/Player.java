@@ -41,8 +41,13 @@ public class Player {
     }
     private void setPlayerBoundaries(){
         getPlayerDrawable();
-        playerSprite.setBounds(centerView + width,(gameViewHeight/2) - height,
-                centerView + width+width,gameViewHeight/2);
+        if(levelID == 1) {
+            playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
+                    centerView + width + width, gameViewHeight / 2);
+        }else{
+            playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
+                    centerView + width * 3, gameViewHeight / 2);
+        }
     }
 
     public boolean checkLeftBoundaries(Rect gameBoundaries){
@@ -59,7 +64,7 @@ public class Player {
         if(levelID == 1){
             playerSprite = currActivity.getResources().getDrawable(R.drawable.player_11);
         }else {
-            playerSprite = currActivity.getResources().getDrawable(R.drawable.operation_x_logo);
+            playerSprite = currActivity.getResources().getDrawable(R.drawable.player_22);
         }
     }
 }

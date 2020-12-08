@@ -30,6 +30,8 @@ public class ActionsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private View view;
+    private int levelID;
     public ActionsFragment() {
         // Required empty public constructor
     }
@@ -65,12 +67,43 @@ public class ActionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_actions, container, false);
+        view = inflater.inflate(R.layout.fragment_actions, container, false);
         setUpActionButtons(view);
+        changeActionPicture();
         return view;
     }
 
+    public void getLevelID(int levelID){
+        this.levelID = levelID;
+    }
 
+    public void changeActionPicture(){
+        if(levelID == 1){
+            levelOnePictures();
+        }else{
+            levelTwoPictures();
+        }
+    }
+
+    private void levelOnePictures(){
+        System.out.println(view);
+        TextView action1 = view.findViewById(R.id.primary_attack);
+        TextView action2 = view.findViewById(R.id.secondary_attack);
+        TextView action3 = view.findViewById(R.id.third_attack);
+        action1.setBackgroundResource(R.drawable.level_1_primary_attack);
+        action2.setBackgroundResource(R.drawable.level_1_secondary_attack);
+        action3.setBackgroundResource(R.drawable.level_1_third_attack);
+    }
+
+    private void levelTwoPictures(){
+        System.out.println(view);
+        TextView action1 = view.findViewById(R.id.primary_attack);
+        TextView action2 = view.findViewById(R.id.secondary_attack);
+        TextView action3 = view.findViewById(R.id.third_attack);
+        action1.setBackgroundResource(R.drawable.level_2_primary_attack);
+        action2.setBackgroundResource(R.drawable.level_2_secondary_attack);
+        action3.setBackgroundResource(R.drawable.level_2_third_attack);
+    }
 
 
     private int actionID = 0;

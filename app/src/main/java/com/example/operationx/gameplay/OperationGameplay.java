@@ -31,8 +31,6 @@ public class OperationGameplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
-        System.out.println("XD");
-
         af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
         Bundle bundle = new Bundle();
@@ -46,13 +44,12 @@ public class OperationGameplay extends AppCompatActivity {
 
         transaction.replace(R.id.game_info_panel, gif);
         transaction.replace(R.id.action_layout, af);
-
         transaction.commit();
-
         System.out.println("Current LEVEL_INT: " + getIntent().getExtras().getInt("LEVEL_INT"));
     }
 
     private void createTileMap(int levelID){
+        af.getLevelID(levelID);
         gameView = new GameTile(this,levelID);
         FrameLayout gameLayout = findViewById(R.id.game_view);
 
