@@ -21,10 +21,10 @@ import java.util.ArrayList;
 public class GameTile extends View {
     public Activity containerActivity;
     private int fixSize,fixWidth,fixHeight, fixWidthBackground;
-    private int dir;
+    private int xDir,yDir;
     private int xBoundaries;
     private int levelID;
-    public int xPos, gameViewHeight;
+    public int xPos,yPos, gameViewHeight;
     private Canvas canvas;
 
     private Drawable playerDrawable;
@@ -50,44 +50,38 @@ public class GameTile extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        if(levelID == 1){
-            float x = event.getX();
-            float y = event.getY();
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    x1 = event.getX();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    x2 = event.getX();
-                    float deltaX = x2 - x1;
-                    if (Math.abs(deltaX) <= 100) {
-                        dir = 0;
-                    } else if (deltaX < MIN_DISTANCE) {
-                        dir = -1;
-                    } else if (deltaX > MIN_DISTANCE) {
-                        dir = 1;
-                    }
-                    break;
-            }
-        }else if(levelID == 2){
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    y1 = event.getY();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    y2 = event.getY();
-                    float deltaY = y2 - y1;
-                    if (Math.abs(deltaY) <= 100) {
-                        dir = 0;
-                    } else if (deltaY < MIN_DISTANCE) {
-                        dir = 1;
-                    } else if (deltaY > MIN_DISTANCE) {
-                        dir = -1;
-                    }
-                    break;
-            }
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                if (Math.abs(deltaX) <= 100) {
+                    xDir = 0;
+                } else if (deltaX < MIN_DISTANCE) {
+                    xDir = -1;
+                } else if (deltaX > MIN_DISTANCE) {
+                    xDir = 1;
+                }
+                break;
         }
-
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                y1 = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                y2 = event.getY();
+                float deltaY = y2 - y1;
+                if (Math.abs(deltaY) <= 100) {
+                    yDir = 0;
+                } else if (deltaY < MIN_DISTANCE) {
+                    yDir = 1;
+                } else if (deltaY > MIN_DISTANCE) {
+                    yDir = -1;
+                }
+                break;
+        }
         return true;
     }
 
@@ -99,7 +93,7 @@ public class GameTile extends View {
         backgroundTiles.updateBackground(canvas, xPos);
         enemyList.updateEnemies(canvas, xPos);
         levelBoundaries.displayBoundaries(canvas,xPos);
-        player.movePlayer(canvas);
+        player.movePlayer(canvas,yPos);
     }
 
     public int doAction(int actionID){
@@ -111,13 +105,16 @@ public class GameTile extends View {
         return 0;
     }
 
+    public boolean reachedFinishLine(){
+        return levelBoundaries.reachFinishLine(player);
+    }
     private boolean playerHitEnemy(EnemyList enemyList){
         if(enemyList.isEmpty())
             return false;
         Enemy currEnemy = enemyList.get(0);
         boolean enemyEncountered = player.getBounds().intersect(currEnemy.getColliderBoundary());
-        if(enemyEncountered && dir != -1)
-            dir = 0;
+        if(enemyEncountered && xDir != -1)
+            xDir = 0;
         return enemyEncountered;
     }
 
@@ -128,10 +125,20 @@ public class GameTile extends View {
 
     public void changeXPos(){
         System.out.println(xPos);
-        if(!playerHitEnemy(enemyList) || (dir == -1 && xPos > 500)){
-            xPos += 50 * -dir;
+        if(levelID == 1 && !playerHitEnemy(enemyList) || (xDir == -1 && xPos > 500)){
+            xPos += 50 * -xDir;
+        }else if(levelID == 2){
+            xPos -= 50;
         }
     }
+
+    public void changeYPos(){
+        if(levelID == 2){
+            yPos -= 45 * yDir;
+        }
+    }
+
+
 
     private void setLevel(){
         player = new Player(containerActivity,150,fixHeight,gameViewHeight, levelID);
@@ -149,7 +156,7 @@ public class GameTile extends View {
         fixWidthBackground = 600;
         gameViewHeight = 1500;
         xPos = 0;
-        dir = 0;
+        xDir = 0;
         xBoundaries = fixSize * 18;
     }
 }

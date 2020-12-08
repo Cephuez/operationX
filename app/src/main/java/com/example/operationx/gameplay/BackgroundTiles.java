@@ -37,7 +37,7 @@ public class BackgroundTiles {
 
     private void backgroundLevelTwo(Canvas canvas, int xPos){
         Drawable background = currActivity.getResources().getDrawable(R.drawable.sky_sprite_1);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             for(int j = 0; j < 2; j++) {
                 background.setBounds(i * fixWidthBackground + xPos, (gameViewHeight / 2) * j,
                         i * fixWidthBackground + fixWidthBackground + xPos, (gameViewHeight / 2) + (gameViewHeight / 2) * j);
