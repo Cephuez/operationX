@@ -47,6 +47,15 @@
             android:textSize="20sp"
             android:layout_marginTop="10dp"
             android:background="#A1E2FF"/>
+
+        <Button
+            android:id="@+id/leaderB_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/leader_boards"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:background="#A1E2FF"/>
     </LinearLayout>
 
 </FrameLayout>
