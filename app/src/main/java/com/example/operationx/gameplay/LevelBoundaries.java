@@ -14,6 +14,7 @@ public class LevelBoundaries {
     private Activity currActivity;
     private int width, height, gameViewHeight, levelID;
     private ArrayList<Rect> endBoundaries;
+    private Rect finishLine;
 
     public LevelBoundaries(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
         this.currActivity = currActivity;
@@ -36,9 +37,14 @@ public class LevelBoundaries {
         }
     }
 
+    public boolean reachFinishLine(Player player){
+        return player.getBounds().intersect(finishLine);
+    }
+
     // Add the boundaries to the level then it should be good xd.
     private void backgroundLevelOne(Canvas canvas, int xPos){
         Drawable endBackground = currActivity.getResources().getDrawable(R.drawable.ground_tile_2);
+        Drawable endPoint = currActivity.getResources().getDrawable(R.drawable.sky_sprite_1);
         for(int i = 0; i < 5; i++) {
             for (int j = -5; j < 0; j++) {
                 endBackground.setBounds(j * width + xPos, height * i,
@@ -54,6 +60,15 @@ public class LevelBoundaries {
                 endBackground.draw(canvas);
             }
         }
+
+        for(int i = 1 ; i < 3; i++){
+            endPoint.setBounds(20 * width + xPos, height * i,
+                    20 * width + width + xPos, height * i + height );
+            endPoint.draw(canvas);
+        }
+
+        finishLine = new Rect(20 * width + xPos, height * 1,
+                20*width + width + xPos, height * 2 + height);
 
         endBoundaries.add(new Rect(-width + xPos, 0, -width + width + xPos, gameViewHeight));
         endBoundaries.add(new Rect(20 * width + xPos, 0, 20 * width + width + xPos, gameViewHeight));

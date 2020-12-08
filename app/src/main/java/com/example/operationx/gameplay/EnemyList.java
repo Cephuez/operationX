@@ -50,9 +50,9 @@ public class EnemyList {
     }
 
     private void setUpList(){
-        if(levelID == 1)
-            setLevelOne();
-        else if(levelID == 2){
+        //if(levelID == 1)
+            //setLevelOne();
+        if(levelID == 2){
             setLevelTwo();
         }
     }

@@ -1,9 +1,11 @@
 package com.example.operationx.gameplay;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,12 +26,14 @@ public class OperationGameplay extends AppCompatActivity {
     private ImageView level;
     private GameTile gameView;
     private Canvas canvas;
+    private Activity activty;
 
     private ActionsFragment af;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activty = this;
         setContentView(R.layout.game_layout);
         af = new ActionsFragment();
         GameInfoFragment gif = new GameInfoFragment();
@@ -62,6 +66,10 @@ public class OperationGameplay extends AppCompatActivity {
         gameLayout.addView(gameView);
     }
 
+    private void startLevel(int levelID){
+        gameView = new GameTile(this,levelID);
+    }
+
     private void beginPlayerMovement(){
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -71,7 +79,10 @@ public class OperationGameplay extends AppCompatActivity {
                 gameView.changeXPos();
                 gameView.changeYPos();
                 af.playerAction(gameView);
+                if(gameView.reachedFinishLine()){
+                    // Make a pop up that allows the player to click to go to next level
+                }
             }
-        }, 0, 100);//put here time 1000 milliseconds=1 second
+        }, 0, 100);
     }
 }

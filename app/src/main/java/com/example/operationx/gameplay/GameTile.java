@@ -105,6 +105,9 @@ public class GameTile extends View {
         return 0;
     }
 
+    public boolean reachedFinishLine(){
+        return levelBoundaries.reachFinishLine(player);
+    }
     private boolean playerHitEnemy(EnemyList enemyList){
         if(enemyList.isEmpty())
             return false;
