@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 public class Enemy {
 
-    private int enemyID;
+    private int levelID, enemyID;
     private ArrayList<Integer> weakness;
     private Rect boundary;
     private Rect colliderBoundary;
     private Activity currActivity;
 
-    public Enemy(int enemyID, Rect boundary, Activity currActivity) {
+    public Enemy(int levelID, int enemyID, Rect boundary, Activity currActivity) {
+        this.levelID = levelID;
         this.enemyID = enemyID;
         this.boundary = new Rect(boundary);
         this.currActivity = currActivity;
@@ -25,7 +26,15 @@ public class Enemy {
         enemyWeakness();
     }
 
-    public Drawable getDrawable(){
+    public Drawable getDrawable() {
+        if (levelID == 1) {
+            return getLevelOneDrawable();
+        } else {
+            return getLevelTwoDrawable();
+        }
+    }
+
+    private Drawable getLevelOneDrawable(){
         Drawable enemies = null;
         if(enemyID == 0){
             enemies = currActivity.getResources().getDrawable(R.drawable.enemy1);
@@ -33,6 +42,19 @@ public class Enemy {
             enemies = currActivity.getResources().getDrawable(R.drawable.enemy_robot_dog);
         }else{
             enemies = currActivity.getResources().getDrawable(R.drawable.obstacle_fence);
+        }
+        return enemies;
+    }
+
+
+    private Drawable getLevelTwoDrawable(){
+        Drawable enemies = null;
+        if(enemyID == 0){
+            enemies = currActivity.getResources().getDrawable(R.drawable.level_2_obstacle_thunder);
+        }else if(enemyID == 1){
+            enemies = currActivity.getResources().getDrawable(R.drawable.level_2_obstacle_mine);
+        }else{
+            enemies = currActivity.getResources().getDrawable(R.drawable.level_2_obstacle_wall);
         }
         return enemies;
     }

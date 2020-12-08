@@ -69,6 +69,7 @@ public class OperationGameplay extends AppCompatActivity {
                 gameView.clearCanvas(canvas);
                 gameView.draw(canvas);
                 gameView.changeXPos();
+                gameView.changeYPos();
                 af.playerAction(gameView);
             }
         }, 0, 100);//put here time 1000 milliseconds=1 second

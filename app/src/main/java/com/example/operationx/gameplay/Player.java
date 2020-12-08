@@ -32,7 +32,11 @@ public class Player {
         return inventory.useItem(actionID);
     }
 
-    public void movePlayer(Canvas canvas){
+    public void movePlayer(Canvas canvas, int yPos){
+        if(levelID == 2){
+            playerSprite.setBounds(-200 + centerView, (gameViewHeight / 2) - height + yPos,
+                    -200 + centerView + width * 2, (gameViewHeight / 2) + yPos);
+        }
         playerSprite.draw(canvas);
     }
 
@@ -44,9 +48,6 @@ public class Player {
         if(levelID == 1) {
             playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
                     centerView + width + width, gameViewHeight / 2);
-        }else{
-            playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
-                    centerView + width * 3, gameViewHeight / 2);
         }
     }
 
