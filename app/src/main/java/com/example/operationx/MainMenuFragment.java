@@ -122,6 +122,16 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+
+        Button leaderBoards = view.findViewById(R.id.leaderB_button);
+        leaderBoards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HttpGetRequest request = new HttpGetRequest();
+                request.execute();
+            }
+        });
+
     }
 
 }
