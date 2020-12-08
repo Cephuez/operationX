@@ -78,6 +78,22 @@ public class EnemyList {
     }
 
     private void setLevelTwo(){
+        for(int i = 1; i < 3; i++){
+            Rect bounds = new Rect(700*i,(gameViewHeight/2) - height,(700*i + width),(gameViewHeight/2));
+            Enemy newEnemy = new Enemy(0,bounds, currActivity);
+            enemyList.add(newEnemy);
+        }
 
+        for(int i = 3; i < 7; i++){
+            Rect bounds = new Rect(700*i,(gameViewHeight/2) - height,(700*i + width),(gameViewHeight/2));
+            Enemy newEnemy = new Enemy(1,bounds, currActivity);
+            enemyList.add(newEnemy);
+        }
+
+        for(int i = 7; i < 8; i++){
+            Rect bounds = new Rect(700*i,(gameViewHeight/2) - height,(700*i + width),(gameViewHeight/2));
+            Enemy newEnemy = new Enemy(2,bounds, currActivity);
+            enemyList.add(newEnemy);
+        }
     }
 }

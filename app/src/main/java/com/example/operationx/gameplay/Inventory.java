@@ -40,7 +40,8 @@ public class Inventory {
         if(levelID == 1){
             setUpLevelOne();
         }else if(levelID == 2){
-
+            System.out.println("Level 2");
+            setUpLevelTwo();
         }
     }
 
@@ -57,15 +58,6 @@ public class Inventory {
         item1 = new InventoryItems(currActivity, 2, 1);
         item2 = new InventoryItems(currActivity, 2, 2);
         item3 = new InventoryItems(currActivity, 2, 3);
-        inventoryList.put(item1, -1);
-        inventoryList.put(item2, 3);
-        inventoryList.put(item3, 3);
-    }
-
-    private void setUpLevelThree(){
-        item1 = new InventoryItems(currActivity, 3, 1);
-        item2 = new InventoryItems(currActivity, 3, 2);
-        item3 = new InventoryItems(currActivity, 3, 3);
         inventoryList.put(item1, -1);
         inventoryList.put(item2, 3);
         inventoryList.put(item3, 3);

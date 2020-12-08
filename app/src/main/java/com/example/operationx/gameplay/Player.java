@@ -14,7 +14,7 @@ public class Player {
     private Drawable playerSprite;
     private Activity currActivity;
 
-    private int width, height, gameViewHeight, levelID;
+    private int width, height, gameViewHeight, levelID, centerView;
     private Inventory inventory;
 
     public Player(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
@@ -23,6 +23,7 @@ public class Player {
         this.height = height;
         this.gameViewHeight = gameViewHeight;
         this.levelID = levelID;
+        centerView = 350;
         inventory = new Inventory(currActivity, levelID);
         setPlayerBoundaries();
     }
@@ -40,15 +41,30 @@ public class Player {
     }
     private void setPlayerBoundaries(){
         getPlayerDrawable();
-        playerSprite.setBounds(width,(gameViewHeight/2) - height,
-                width+width,gameViewHeight/2);
+        if(levelID == 1) {
+            playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
+                    centerView + width + width, gameViewHeight / 2);
+        }else{
+            playerSprite.setBounds(centerView + width, (gameViewHeight / 2) - height,
+                    centerView + width * 3, gameViewHeight / 2);
+        }
+    }
+
+    public boolean checkLeftBoundaries(Rect gameBoundaries){
+        Rect playerBoundary = playerSprite.getBounds();
+        return !playerBoundary.intersect(gameBoundaries) && playerBoundary.left > gameBoundaries.left;
+    }
+
+    public boolean checkRightBoundaries(Rect gameBoundaries){
+        Rect playerBoundary = playerSprite.getBounds();
+        return !playerBoundary.intersect(gameBoundaries) && playerBoundary.right < gameBoundaries.right;
     }
 
     private void getPlayerDrawable(){
         if(levelID == 1){
             playerSprite = currActivity.getResources().getDrawable(R.drawable.player_11);
         }else {
-            playerSprite = currActivity.getResources().getDrawable(R.drawable.operation_x_logo);
+            playerSprite = currActivity.getResources().getDrawable(R.drawable.player_22);
         }
     }
 }

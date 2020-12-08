@@ -26,16 +26,23 @@ public class BackgroundTiles {
         }
     }
 
-    private void backgroundLevelOne(Canvas canvas, int xPos){
+    private void backgroundLevelOne(Canvas canvas, int xPos) {
         Drawable background = currActivity.getResources().getDrawable(R.drawable.level_1_background);
-        for(int i = 0; i < 10; i++){
-            background.setBounds(i*fixWidthBackground+xPos, 0,
-                    i * fixWidthBackground + fixWidthBackground + xPos, gameViewHeight/2);
+        for (int i = 0; i < 10; i++) {
+            background.setBounds(i * fixWidthBackground + xPos, 0,
+                    i * fixWidthBackground + fixWidthBackground + xPos, gameViewHeight / 2);
             background.draw(canvas);
         }
     }
 
     private void backgroundLevelTwo(Canvas canvas, int xPos){
-
+        Drawable background = currActivity.getResources().getDrawable(R.drawable.sky_sprite_1);
+        for (int i = 0; i < 10; i++) {
+            for(int j = 0; j < 2; j++) {
+                background.setBounds(i * fixWidthBackground + xPos, (gameViewHeight / 2) * j,
+                        i * fixWidthBackground + fixWidthBackground + xPos, (gameViewHeight / 2) + (gameViewHeight / 2) * j);
+                background.draw(canvas);
+            }
+        }
     }
 }

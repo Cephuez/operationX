@@ -24,10 +24,8 @@ public class InventoryItems {
     private void setUpItem(){
         if(levelID == 1){
             setUpLevelOne();
-        }else if(levelID == 2){
-            setUpLevelTwo();
         }else{
-            setUpLevelThree();
+            setUpLevelTwo();
         }
     }
 
@@ -43,21 +41,11 @@ public class InventoryItems {
 
     private void setUpLevelTwo(){
         if(itemID == 1){
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_primary_attack);
+            sprite = currActivity.getResources().getDrawable(R.drawable.level_2_primary_attack);
         }else if(itemID == 2){
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_secondary_attack);
+            sprite = currActivity.getResources().getDrawable(R.drawable.level_2_secondary_attack);
         }else{
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_third_attack);
-        }
-    }
-
-    private void setUpLevelThree(){
-        if(itemID == 1){
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_primary_attack);
-        }else if(itemID == 2){
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_secondary_attack);
-        }else{
-            sprite = currActivity.getResources().getDrawable(R.drawable.level_1_third_attack);
+            sprite = currActivity.getResources().getDrawable(R.drawable.level_2_third_attack);
         }
     }
 }

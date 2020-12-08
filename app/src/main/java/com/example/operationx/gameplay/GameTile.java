@@ -34,6 +34,8 @@ public class GameTile extends View {
     private BackgroundTiles backgroundTiles;
     private GroundTile groundTile;
     private EnemyList enemyList;
+    private LevelBoundaries levelBoundaries;
+    private LevelControllers levelControllers;
 
     public GameTile(Activity currActivity, int levelID){
         super(currActivity);
@@ -43,29 +45,49 @@ public class GameTile extends View {
         setLevel();
         this.setBackgroundColor(0xFFFFFFFF);
     }
-    private float x1,x2;
+    private float x1,x2,y1,y2;
     static final int MIN_DISTANCE = 150;
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        float x = event.getX();
-        float y = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float deltaX = x2 - x1;
-                if (Math.abs(deltaX) <= 100) {
-                    dir = 0;
-                } else if (deltaX < MIN_DISTANCE && xPos <= 0) {
-                    dir = -1;
-                } else if (deltaX > MIN_DISTANCE && xPos <= 0) {
-                    dir = 1;
-                }
-                break;
+        if(levelID == 1){
+            float x = event.getX();
+            float y = event.getY();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    x1 = event.getX();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    x2 = event.getX();
+                    float deltaX = x2 - x1;
+                    if (Math.abs(deltaX) <= 100) {
+                        dir = 0;
+                    } else if (deltaX < MIN_DISTANCE) {
+                        dir = -1;
+                    } else if (deltaX > MIN_DISTANCE) {
+                        dir = 1;
+                    }
+                    break;
+            }
+        }else if(levelID == 2){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    y1 = event.getY();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    y2 = event.getY();
+                    float deltaY = y2 - y1;
+                    if (Math.abs(deltaY) <= 100) {
+                        dir = 0;
+                    } else if (deltaY < MIN_DISTANCE) {
+                        dir = 1;
+                    } else if (deltaY > MIN_DISTANCE) {
+                        dir = -1;
+                    }
+                    break;
+            }
         }
+
         return true;
     }
 
@@ -76,15 +98,17 @@ public class GameTile extends View {
         groundTile.displayGroundTiles(canvas, xPos);
         backgroundTiles.updateBackground(canvas, xPos);
         enemyList.updateEnemies(canvas, xPos);
+        levelBoundaries.displayBoundaries(canvas,xPos);
         player.movePlayer(canvas);
     }
 
     public int doAction(int actionID){
-        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID) && player.doAction(actionID)) {
+        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
+                 && playerHitEnemy(enemyList) && player.doAction(actionID)) {
             enemyList.remove(0);
             return 0;
         }
-        return actionID;
+        return 0;
     }
 
     private boolean playerHitEnemy(EnemyList enemyList){
@@ -92,7 +116,7 @@ public class GameTile extends View {
             return false;
         Enemy currEnemy = enemyList.get(0);
         boolean enemyEncountered = player.getBounds().intersect(currEnemy.getColliderBoundary());
-        if(enemyEncountered)
+        if(enemyEncountered && dir != -1)
             dir = 0;
         return enemyEncountered;
     }
@@ -103,12 +127,9 @@ public class GameTile extends View {
     }
 
     public void changeXPos(){
-        if(!playerHitEnemy(enemyList) || dir == 1) {
-            if (xBoundaries > Math.abs(xPos + (dir * 50))) {
-                xPos += (dir * 50);
-            }
-            if (xPos > 0)
-                xPos = 0;
+        System.out.println(xPos);
+        if(!playerHitEnemy(enemyList) || (dir == -1 && xPos > 500)){
+            xPos += 50 * -dir;
         }
     }
 
@@ -117,6 +138,7 @@ public class GameTile extends View {
         enemyList = new EnemyList(containerActivity,fixWidth,fixHeight,gameViewHeight, levelID);
         backgroundTiles = new BackgroundTiles(containerActivity,fixWidthBackground,gameViewHeight,levelID);
         groundTile = new GroundTile(containerActivity,fixWidth,fixHeight,gameViewHeight,levelID);
+        levelBoundaries = new LevelBoundaries(containerActivity,fixWidth,fixHeight,gameViewHeight,levelID);
     }
 
     private void setPreValues(){
