@@ -42,11 +42,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playMusic(){
-
         final MediaPlayer music = MediaPlayer.create(this,R.raw.blazer_rail);
         music.setVolume(1,1);
-        music.setLooping(true);
-
+        music.setLooping(false);
         new Thread(new Runnable() {
             @Override
             public void run() {

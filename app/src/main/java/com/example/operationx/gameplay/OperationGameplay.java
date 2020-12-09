@@ -31,6 +31,7 @@ public class OperationGameplay extends AppCompatActivity {
     private Activity activty;
 
     private ActionsFragment af;
+    private GameInfoFragment gif;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class OperationGameplay extends AppCompatActivity {
         activty = this;
         setContentView(R.layout.game_layout);
         af = new ActionsFragment();
-        GameInfoFragment gif = new GameInfoFragment();
+        gif = new GameInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("LEVEL_FRAG_INT", getIntent().getExtras().getInt("LEVEL_INT"));
         gif.setArguments(bundle);
@@ -82,20 +83,22 @@ public class OperationGameplay extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        gameView.clearCanvas(canvas);
-                        gameView.draw(canvas);
-                        af.playerAction(gameView);
-                        gameView.changeXPos();
-                        gameView.changeYPos();
-                        if(gameView.reachedFinishLine()) {
-                            HttpPostRequest request = new HttpPostRequest();
-                            request.execute("TestX", gameView.getPlayerScore());
-                            cancel();
+                        if(!gif.isPaused()) {
+                            gameView.clearCanvas(canvas);
+                            gameView.draw(canvas);
+                            af.playerAction(gameView);
+                            gameView.changeXPos();
+                            gameView.changeYPos();
+                            if (gameView.reachedFinishLine()) {
+                                HttpPostRequest request = new HttpPostRequest();
+                                request.execute("TestX", gameView.getPlayerScore());
+                                cancel();
+                            }
                         }
                     }
                 });
             }
-        }, 0, 75);
+        }, 0, 100 - 25 * fps);
     }
 
     @Override

@@ -149,6 +149,11 @@ public class GameInfoFragment extends Fragment {
 
     }
 
+    private boolean pausedGame;
+    public boolean isPaused(){
+        return pausedGame;
+    }
+
     public void addOnclick(View view) {
         TextView livesBox = view.findViewById(R.id.lives_box);
 
@@ -166,7 +171,7 @@ public class GameInfoFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pausedGame = true;
                 //Pause the game animation here... <-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("PAUSED");
@@ -174,6 +179,7 @@ public class GameInfoFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(which == 0){
+                            pausedGame = false;
                             System.out.println("Resume the game animation");
                         }else if(which == 1){
                             /*System.out.println("Start the settings fragment");
