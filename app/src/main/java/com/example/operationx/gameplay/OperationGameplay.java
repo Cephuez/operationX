@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.operationx.ActionsFragment;
 import com.example.operationx.GameInfoFragment;
+import com.example.operationx.HttpPostRequest;
 import com.example.operationx.R;
 
 import java.util.Timer;
@@ -82,6 +83,8 @@ public class OperationGameplay extends AppCompatActivity {
                         gameView.changeXPos();
                         gameView.changeYPos();
                         if(gameView.reachedFinishLine() || gameView.playerDead()) {
+                            HttpPostRequest request = new HttpPostRequest();
+                            request.execute("TestX", 1200);
                             cancel();
                             onBackPressed();
                         }
