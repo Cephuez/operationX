@@ -29,12 +29,9 @@ public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
             String result = "";
 
             JSONObject json = new JSONObject();
-
-
-            Log.d("postTask: JO",json.toString());
             try {
-                json.put("user", (String) objects[0]);
-                json.put("score", (Integer) objects[1]);
+                json.put("User", (String) objects[0]);
+                json.put("Score", (Integer) objects[1]);
                 //URL address = new URL("https://kettlex-server.herokuapp.com/operationx/post");
                 URL url;
                 DataOutputStream printout;

@@ -1,6 +1,9 @@
 package com.example.operationx.gameplay;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -9,13 +12,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.operationx.ActionsFragment;
 import com.example.operationx.GameInfoFragment;
 import com.example.operationx.HttpPostRequest;
+import com.example.operationx.MainMenuFragment;
 import com.example.operationx.R;
+import com.example.operationx.SettingsFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +36,7 @@ public class OperationGameplay extends AppCompatActivity {
     private Activity activty;
 
     private ActionsFragment af;
-    
+    private final String[] endGameOptions = {"Main Menu", "Levels List"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,12 +78,17 @@ public class OperationGameplay extends AppCompatActivity {
     }
 
     private void beginPlayerMovement() {
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        Integer fps = sharedPref.getInt(getString(R.string.saved_fps_key), 1);
+        System.out.println("FPS = " + fps);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+
                         gameView.clearCanvas(canvas);
                         gameView.draw(canvas);
                         af.playerAction(gameView);
@@ -86,7 +98,6 @@ public class OperationGameplay extends AppCompatActivity {
                             HttpPostRequest request = new HttpPostRequest();
                             request.execute("TestX", 1200);
                             cancel();
-                            onBackPressed();
                         }
                     }
                 });
