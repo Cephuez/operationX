@@ -2,20 +2,24 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="50dp"
     android:orientation="horizontal"
-    android:background="#686666">
+    android:background="#605C5C"
+    android:paddingHorizontal="5dp">
 
-    <TextView android:id="@+id/userNameLB"
+    <TextView
+        android:id="@+id/userNameLB"
         android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="300dp"
+        android:textColor="@color/gameFPSColor"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
     <TextView android:id="@+id/scoreLB"
-        android:layout_marginLeft="300dp"
         android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_width="90dp"
+        android:textColor="@color/gameFPSColor"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

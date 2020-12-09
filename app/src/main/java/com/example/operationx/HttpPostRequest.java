@@ -15,13 +15,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class HttpPostRequest extends AsyncTask<Integer, Void, Void> {
+public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
     static final String REQUEST_METHOD = "POST";
     static final int READ_TIMEOUT = 15000;
     static final int CONNECTION_TIMEOUT = 15000;
 
     @Override
-    protected Void doInBackground(Integer... integers) {
+    protected Void doInBackground(Object... objects) {
 
             // connect to the server
 
@@ -33,8 +33,8 @@ public class HttpPostRequest extends AsyncTask<Integer, Void, Void> {
 
             Log.d("postTask: JO",json.toString());
             try {
-                json.put("user", "testAndroid");
-                json.put("score", integers[0]);
+                json.put("user", (String) objects[0]);
+                json.put("score", (Integer) objects[1]);
                 //URL address = new URL("https://kettlex-server.herokuapp.com/operationx/post");
                 URL url;
                 DataOutputStream printout;

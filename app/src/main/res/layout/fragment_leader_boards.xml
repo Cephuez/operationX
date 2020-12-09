@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LeaderBoardsFragment"
-    android:background="#686666">
+    android:background="#555252">
 
     <!-- TODO: Update blank fragment layout -->
    <ListView
     android:id="@+id/leaderBoardList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
+
 
 </FrameLayout>

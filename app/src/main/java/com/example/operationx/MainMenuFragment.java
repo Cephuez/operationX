@@ -139,8 +139,8 @@ public class MainMenuFragment extends Fragment {
                         .commit();
 
                 //This code tested the POST request and is now working.
-               /* HttpPostRequest request = new HttpPostRequest();
-                request.execute(1);*/
+                /*HttpPostRequest request = new HttpPostRequest();
+                request.execute("TestX", 1200);*/
             }
         });
 
