@@ -99,26 +99,6 @@ public class GameInfoFragment extends Fragment {
         return view;
     }
 
-   /*@Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.pause_context_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.settings_pause:
-                System.out.print("pressed settings");
-                return true;
-
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }*/
-
 
     public void setObservers(View view){
         final TextView livesBox =  view.findViewById(R.id.lives_box);
@@ -175,6 +155,9 @@ public class GameInfoFragment extends Fragment {
                 //Pause the game animation here... <-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("PAUSED");
+
+
+
                 builder.setItems(pauseOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -182,16 +165,6 @@ public class GameInfoFragment extends Fragment {
                             pausedGame = false;
                             System.out.println("Resume the game animation");
                         }else if(which == 1){
-                            /*System.out.println("Start the settings fragment");
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setTitle("SETTINGS");
-                            builder.setItems(settingsOptions, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    System.out.println("Launch settings alert menu");
-                                }
-                            });
-                            builder.show();*/
                             sf = new SettingsFragment();
                             FragmentManager fm = getActivity().getSupportFragmentManager();
                             fm.beginTransaction()
@@ -207,7 +180,11 @@ public class GameInfoFragment extends Fragment {
                         }
                     }
                 });
-                builder.show();
+                AlertDialog alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setCancelable(false);
+
+                //builder.show();
             }
         });
     }
