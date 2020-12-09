@@ -1,6 +1,8 @@
 package com.example.operationx.gameplay;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -29,14 +31,15 @@ public class OperationGameplay extends AppCompatActivity {
     private Activity activty;
 
     private ActionsFragment af;
-    
+    private GameInfoFragment gif;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activty = this;
         setContentView(R.layout.game_layout);
         af = new ActionsFragment();
-        GameInfoFragment gif = new GameInfoFragment();
+        gif = new GameInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("LEVEL_FRAG_INT", getIntent().getExtras().getInt("LEVEL_INT"));
         gif.setArguments(bundle);
@@ -71,6 +74,9 @@ public class OperationGameplay extends AppCompatActivity {
     }
 
     private void beginPlayerMovement() {
+        //int number = gif.getSpeed();
+        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        int settingSpeed = sharedPreferences.getInt("OPERATIONX_GAME_FPS_KEY",1);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -82,12 +88,13 @@ public class OperationGameplay extends AppCompatActivity {
                         af.playerAction(gameView);
                         gameView.changeXPos();
                         gameView.changeYPos();
-                        if(gameView.reachedFinishLine() || gameView.playerDead()) {
+                        if(gameView.reachedFinishLine()) {
                             HttpPostRequest request = new HttpPostRequest();
-                            request.execute("TestX", 1200);
+                            request.execute("TestX", gameView.getPlayerScore());
                             cancel();
-                            onBackPressed();
                         }
+                        //if(gameView.playerDead())
+                        //    onBackPressed();
                     }
                 });
             }

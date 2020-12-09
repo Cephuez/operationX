@@ -31,6 +31,7 @@ import org.w3c.dom.Text;
  */
 public class GameInfoFragment extends Fragment {
     private GameOptionsViewModel model;
+    private SettingsFragment sf;
     private final String[] pauseOptions = {"Resume", "Settings", "Main Menu"};
     private final String[] settingsOptions = {"Volume", "Game FPS", "Redeem"};
 
@@ -185,7 +186,7 @@ public class GameInfoFragment extends Fragment {
                                 }
                             });
                             builder.show();*/
-                            SettingsFragment sf = new SettingsFragment();
+                            sf = new SettingsFragment();
                             FragmentManager fm = getActivity().getSupportFragmentManager();
                             fm.beginTransaction()
                                     .replace(R.id.game_layout, sf)
@@ -203,8 +204,6 @@ public class GameInfoFragment extends Fragment {
                 builder.show();
             }
         });
-
-
-
     }
+
 }
