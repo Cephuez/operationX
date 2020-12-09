@@ -31,6 +31,7 @@ public class Inventory {
         }else if(itemID == 3){
             return checkIfItemAvailable(item3);
         }
+        System.out.println("true");
         return true;
     }
 

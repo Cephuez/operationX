@@ -35,6 +35,30 @@ public class EnemyList {
         return enemyList.size();
     }
 
+    public void playerAction(int actionID, Player player){
+        for(int i = 0; i < enemyList.size(); i++){
+            int playerX1 = player.getBounds().left;
+            int playerX2 = player.getBounds().right;
+            int playerY1 = player.getBounds().top;
+            int playerY2 = player.getBounds().bottom;
+
+            Enemy currEnemy = enemyList.get(i);
+            int enemyX1 = currEnemy.getBoundary().left;
+            int enemyX2 = currEnemy.getBoundary().right;
+            int enemyY1 = currEnemy.getBoundary().top;
+            int enemyY2 = currEnemy.getBoundary().bottom;
+
+            if(actionID == 2 && playerX2 < enemyX1){
+                int newEnemyY = enemyY1 + ((enemyY2 - enemyY1) / 2);
+                if(playerY1 <= newEnemyY && newEnemyY <= playerY2) {
+                    enemyList.remove(i);
+                    break;
+                }
+            }
+        }
+
+    }
+
     public void updateEnemies(Canvas canvas, int xPos){
         for(int i = 0; i < enemyList.size(); i++){
             Enemy currEnemy = enemyList.get(i);

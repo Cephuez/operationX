@@ -30,6 +30,13 @@ public class Player {
         setPlayerBoundaries();
     }
 
+    public void loseLife(){
+        lives -= 1;
+    }
+
+    public boolean isDead(){
+        return lives == 0;
+    }
     public boolean doAction(int actionID){
         return inventory.useItem(actionID);
     }

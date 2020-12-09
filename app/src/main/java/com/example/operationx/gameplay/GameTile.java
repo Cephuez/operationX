@@ -27,6 +27,7 @@ public class GameTile extends View {
     public int xPos,yPos, gameViewHeight;
     private long startTime;
     private Canvas canvas;
+    private ArrayList<Drawable> laserBullets;
 
     private Drawable playerDrawable;
 
@@ -41,6 +42,7 @@ public class GameTile extends View {
     public GameTile(Activity currActivity, int levelID){
         super(currActivity);
         this.levelID = levelID;
+        laserBullets = new ArrayList<Drawable>();
         startTime = 0;
         setPreValues();
         containerActivity = currActivity;
@@ -96,19 +98,28 @@ public class GameTile extends View {
         enemyList.updateEnemies(canvas, xPos);
         levelBoundaries.displayBoundaries(canvas,xPos);
         player.movePlayer(canvas,yPos);
+        playerShoots(canvas);
+        updateBulletPosition(canvas);
+
     }
 
     public int doAction(int actionID){
-        if(!enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
+        if(levelID == 1 && !enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
                  && playerHitEnemy(enemyList) && player.doAction(actionID)) {
             enemyList.remove(0);
             return 0;
+        }else if(levelID == 2 && !enemyList.isEmpty() && player.doAction(actionID)){
+            enemyList.playerAction(actionID, player);
         }
         return 0;
     }
 
     public boolean reachedFinishLine(){
         return levelBoundaries.reachFinishLine(player);
+    }
+
+    public boolean playerDead(){
+        return player.isDead();
     }
     private boolean playerHitEnemy(EnemyList enemyList){
         if(levelID == 1){
@@ -129,11 +140,59 @@ public class GameTile extends View {
     }
 
     private boolean playerHitEnemyLevelTwo(){
-        return true;
+        if(enemyList.isEmpty())
+            return false;
+        for(int i = 0; i < enemyList.size(); i++){
+            Enemy currEnemy = enemyList.get(i);
+            boolean enemyEncountered = player.getBounds().intersect(currEnemy.getColliderBoundary());
+            if(enemyEncountered) {
+                enemyList.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
     public void clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
+    }
+
+    public void playerShoots(Canvas canvas){
+        if(levelID == 2){
+            Drawable bullet1 = getResources().getDrawable(R.drawable.laser_bullet);
+            Drawable bullet2 = getResources().getDrawable(R.drawable.laser_bullet);
+            Rect playerRect = player.getBounds();
+            int xPos = playerRect.right;
+            int yPos1 = playerRect.top;
+            int yPos2 = playerRect.bottom;
+
+            bullet1.setBounds(xPos - 50, yPos1+50,
+                    -50 + xPos + fixWidth*2/4, yPos1+75);
+            bullet2.setBounds(xPos - 50, yPos2-75,
+                    -50 + xPos + fixWidth*2/4, yPos2 - 50);
+
+            laserBullets.add(bullet1);
+            laserBullets.add(bullet2);
+        }
+    }
+
+    public void updateBulletPosition(Canvas canvas){
+        if(levelID == 2) {
+            for (int i = 0; i < laserBullets.size(); i++) {
+                Drawable currBullet = laserBullets.get(i);
+                Rect currBounds = currBullet.getBounds();
+                currBullet.setBounds(currBounds.left + 200, currBounds.top,
+                        currBounds.right + 200, currBounds.bottom);
+                currBullet.draw(canvas);
+            }
+
+            Drawable currBullet = laserBullets.get(0);
+            Rect currBounds = currBullet.getBounds();
+            if (currBounds.right >= 1000) {
+                laserBullets.remove(0);
+                laserBullets.remove(0);
+            }
+        }
     }
 
     public void changeXPos(){
@@ -141,9 +200,9 @@ public class GameTile extends View {
             xPos += 50 * -xDir;
         }else if(levelID == 2){
             xPos -= 50;
-            //if(playerHitEnemy(enemyList)){
-                //.loseLife();
-            //}
+            if(playerHitEnemy(enemyList)){
+                player.loseLife();
+            }
         }
     }
 

@@ -76,14 +76,14 @@ public class OperationGameplay extends AppCompatActivity {
             public void run() {
                 gameView.clearCanvas(canvas);
                 gameView.draw(canvas);
+                af.playerAction(gameView);
                 gameView.changeXPos();
                 gameView.changeYPos();
-                af.playerAction(gameView);
-                if(gameView.reachedFinishLine()){
-                    System.out.println(gameView.getPlayerScore());
+                if(gameView.reachedFinishLine() || gameView.playerDead()){
+                    System.out.println("Die xd");
                     cancel();
                 }
             }
-        }, 0, 100);
+        }, 0, 75);
     }
 }
