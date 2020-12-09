@@ -80,7 +80,8 @@ public class OperationGameplay extends AppCompatActivity {
                 gameView.changeYPos();
                 af.playerAction(gameView);
                 if(gameView.reachedFinishLine()){
-                    // Make a pop up that allows the player to click to go to next level
+                    System.out.println(gameView.getPlayerScore());
+                    cancel();
                 }
             }
         }, 0, 100);

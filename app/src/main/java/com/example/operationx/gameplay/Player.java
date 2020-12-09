@@ -14,6 +14,7 @@ public class Player {
     private Drawable playerSprite;
     private Activity currActivity;
 
+    private int lives;
     private int width, height, gameViewHeight, levelID, centerView;
     private Inventory inventory;
 
@@ -23,6 +24,7 @@ public class Player {
         this.height = height;
         this.gameViewHeight = gameViewHeight;
         this.levelID = levelID;
+        lives = 3;
         centerView = 350;
         inventory = new Inventory(currActivity, levelID);
         setPlayerBoundaries();
@@ -38,6 +40,10 @@ public class Player {
                     -200 + centerView + width * 2, (gameViewHeight / 2) + yPos);
         }
         playerSprite.draw(canvas);
+    }
+
+    public int getScore(){
+        return inventory.getScore() + lives * 100;
     }
 
     public Rect getBounds(){

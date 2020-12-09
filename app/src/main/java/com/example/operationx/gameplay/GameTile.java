@@ -25,6 +25,7 @@ public class GameTile extends View {
     private int xBoundaries;
     private int levelID;
     public int xPos,yPos, gameViewHeight;
+    private long startTime;
     private Canvas canvas;
 
     private Drawable playerDrawable;
@@ -40,6 +41,7 @@ public class GameTile extends View {
     public GameTile(Activity currActivity, int levelID){
         super(currActivity);
         this.levelID = levelID;
+        startTime = 0;
         setPreValues();
         containerActivity = currActivity;
         setLevel();
@@ -109,6 +111,14 @@ public class GameTile extends View {
         return levelBoundaries.reachFinishLine(player);
     }
     private boolean playerHitEnemy(EnemyList enemyList){
+        if(levelID == 1){
+            return playerHitEnemyLevelOne();
+        }else{
+            return playerHitEnemyLevelTwo();
+        }
+    }
+
+    private boolean playerHitEnemyLevelOne(){
         if(enemyList.isEmpty())
             return false;
         Enemy currEnemy = enemyList.get(0);
@@ -118,17 +128,22 @@ public class GameTile extends View {
         return enemyEncountered;
     }
 
+    private boolean playerHitEnemyLevelTwo(){
+        return true;
+    }
     public void clearCanvas(Canvas canvas){
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         invalidate();
     }
 
     public void changeXPos(){
-        System.out.println(xPos);
         if(levelID == 1 && !playerHitEnemy(enemyList) || (xDir == -1 && xPos > 500)){
             xPos += 50 * -xDir;
         }else if(levelID == 2){
             xPos -= 50;
+            //if(playerHitEnemy(enemyList)){
+                //.loseLife();
+            //}
         }
     }
 
@@ -138,7 +153,9 @@ public class GameTile extends View {
         }
     }
 
-
+    public int getPlayerScore(){
+        return player.getScore();
+    }
 
     private void setLevel(){
         player = new Player(containerActivity,150,fixHeight,gameViewHeight, levelID);

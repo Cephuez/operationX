@@ -86,7 +86,6 @@ public class ActionsFragment extends Fragment {
     }
 
     private void levelOnePictures(){
-        System.out.println(view);
         TextView action1 = view.findViewById(R.id.primary_attack);
         TextView action2 = view.findViewById(R.id.secondary_attack);
         TextView action3 = view.findViewById(R.id.third_attack);
@@ -96,7 +95,6 @@ public class ActionsFragment extends Fragment {
     }
 
     private void levelTwoPictures(){
-        System.out.println(view);
         TextView action1 = view.findViewById(R.id.primary_attack);
         TextView action2 = view.findViewById(R.id.secondary_attack);
         TextView action3 = view.findViewById(R.id.third_attack);
@@ -116,7 +114,6 @@ public class ActionsFragment extends Fragment {
         action1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Primary Attack");
                 actionID = 1;
             }
         });
@@ -125,7 +122,6 @@ public class ActionsFragment extends Fragment {
         action2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Secondary Attack");
                 actionID = 2;
             }
         });
@@ -134,7 +130,6 @@ public class ActionsFragment extends Fragment {
         action3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Third Attack");
                 actionID = 3;
             }
         });

@@ -19,6 +19,12 @@ public class Inventory {
         setUpInventory();
     }
 
+    public int getScore(){
+        int score1 = 10;
+        int score2 = inventoryList.get(item2) * 20;
+        int score3 = inventoryList.get(item3) * 20;
+        return score1 + score2 + score3;
+    }
     public boolean useItem(int itemID){
         if(itemID == 2){
             return checkIfItemAvailable(item2);

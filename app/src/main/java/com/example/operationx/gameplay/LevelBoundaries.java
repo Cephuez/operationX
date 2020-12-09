@@ -84,5 +84,7 @@ public class LevelBoundaries {
 
     private void backgroundLevelTwo(Canvas canvas, int xPos){
 
+        finishLine = new Rect(40 * width + xPos, 0,
+                40*width + width + xPos, gameViewHeight);
     }
 }
