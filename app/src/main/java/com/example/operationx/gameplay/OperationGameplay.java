@@ -1,9 +1,6 @@
 package com.example.operationx.gameplay;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -12,17 +9,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.operationx.ActionsFragment;
 import com.example.operationx.GameInfoFragment;
 import com.example.operationx.HttpPostRequest;
-import com.example.operationx.MainMenuFragment;
 import com.example.operationx.R;
-import com.example.operationx.SettingsFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,7 +29,7 @@ public class OperationGameplay extends AppCompatActivity {
     private Activity activty;
 
     private ActionsFragment af;
-    private final String[] endGameOptions = {"Main Menu", "Levels List"};
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,16 +80,14 @@ public class OperationGameplay extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
                         gameView.clearCanvas(canvas);
                         gameView.draw(canvas);
                         af.playerAction(gameView);
                         gameView.changeXPos();
                         gameView.changeYPos();
-                        if(gameView.reachedFinishLine() || gameView.playerDead()) {
+                        if(gameView.reachedFinishLine()) {
                             HttpPostRequest request = new HttpPostRequest();
-                            request.execute("TestX", 1200);
+                            request.execute("TestX", gameView.getPlayerScore());
                             cancel();
                         }
                     }

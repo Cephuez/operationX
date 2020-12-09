@@ -49,12 +49,18 @@ public class EnemyList {
             int enemyY2 = currEnemy.getBoundary().bottom;
 
             if(actionID == 2 && playerX2 < enemyX1){
-                System.out.println(currEnemy);
                 int newEnemyY = enemyY1 + ((enemyY2 - enemyY1) / 2);
                 if(playerY1 <= newEnemyY && newEnemyY <= playerY2) {
                     enemyList.remove(i);
                     break;
                 }
+            }
+
+            System.out.println(enemyX2);
+            if(actionID == 3 && (0 < enemyX2 && 0 < enemyY2  && enemyX1 < gameViewHeight * 2 && enemyY1 < gameViewHeight)){
+                System.out.println("Destroyed some objects");
+                enemyList.remove(i);
+                i -= 1;
             }
         }
 

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.cephy_test_layout);
-        playMusic();
+        //playMusic();
         setContentView(R.layout.activity_main);
 
         MainMenuFragment mmFrag = new MainMenuFragment();
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_layout,
                 mmFrag);
         transaction.commit();
-
+        playMusic();
     }
 
 
