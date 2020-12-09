@@ -74,6 +74,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     public void setButtons(View view){
+        final View fView = view;
         Button levelButton = (Button) view.findViewById(R.id.level_button);
         levelButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -128,7 +129,18 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 HttpGetRequest request = new HttpGetRequest();
-                request.execute();
+                request.execute(fView);
+
+                LeaderBoardsFragment lb = new LeaderBoardsFragment();
+
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_menu_frag, lb, "leaderBoardFragment")
+                        .addToBackStack(null)
+                        .commit();
+
+                //This code tested the POST request and is now working.
+               /* HttpPostRequest request = new HttpPostRequest();
+                request.execute(1);*/
             }
         });
 

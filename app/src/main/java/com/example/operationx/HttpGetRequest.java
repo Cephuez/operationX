@@ -1,27 +1,38 @@
 package com.example.operationx;
 
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class HttpGetRequest extends AsyncTask<Void, Void, String> {
-
+public class HttpGetRequest extends AsyncTask<Object, Void, JSONArray> {
+    View view;
     static final String REQUEST_METHOD = "GET";
     static final int READ_TIMEOUT = 15000;
     static final int CONNECTION_TIMEOUT = 15000;
+    public JSONArray arrayResult;
 
     @Override
-    protected String doInBackground(Void... params){
+    protected JSONArray doInBackground(Object... objects){
         String result;
         String inputLine;
+        view = (View) objects[0];
 
         try {
             // connect to the server
-            URL myUrl = new URL("https://kettlex-server.herokuapp.com/");
+            URL myUrl = new URL("https://kettlex-server.herokuapp.com/getLeaderBoard");
             HttpURLConnection connection =(HttpURLConnection) myUrl.openConnection();
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
@@ -39,17 +50,42 @@ public class HttpGetRequest extends AsyncTask<Void, Void, String> {
             streamReader.close();
             result = stringBuilder.toString();
             System.out.println("GET result: " + result);
+            JSONArray jsonArray = new JSONArray(result);
+            return jsonArray;
 
-        } catch(IOException e) {
+        } catch(IOException | JSONException e) {
             e.printStackTrace();
-            result = "error";
         }
-
-        return result;
+        return null;
     }
 
-    protected void onPostExecute(String result){
-        super.onPostExecute(result);
-        //vServerResponse.setText(result);
+    protected void onPostExecute(JSONArray jsonArray){
+        ListView simpleListView=(ListView) view.findViewById(R.id.leaderBoardList);
+        ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
+        JSONArray scoresList = null;
+
+
+
+        for(int i=0; i<jsonArray.length(); i++) {
+            try {
+                JSONObject curr = jsonArray.getJSONObject(i);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("User", curr.getString("User"));
+                hashMap.put("Score", curr.getInt("Score") + "");
+                arrayList.add(hashMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        String[] from={"User","Score"};
+        int[] to={R.id.userNameLB,R.id.scoreLB};
+        SimpleAdapter simpleAdapter=new SimpleAdapter(view.getContext(),arrayList,
+                R.layout.leader_board_element,from,to);
+
+
+        simpleListView.setAdapter(simpleAdapter);
+
+
     }
 }
