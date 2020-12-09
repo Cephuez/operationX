@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -70,20 +69,30 @@ public class OperationGameplay extends AppCompatActivity {
         gameView = new GameTile(this,levelID);
     }
 
-    private void beginPlayerMovement(){
+    private void beginPlayerMovement() {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                gameView.clearCanvas(canvas);
-                gameView.draw(canvas);
-                af.playerAction(gameView);
-                gameView.changeXPos();
-                gameView.changeYPos();
-                if(gameView.reachedFinishLine() || gameView.playerDead()){
-                    System.out.println("Die xd");
-                    cancel();
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameView.clearCanvas(canvas);
+                        gameView.draw(canvas);
+                        af.playerAction(gameView);
+                        gameView.changeXPos();
+                        gameView.changeYPos();
+                        if(gameView.reachedFinishLine() || gameView.playerDead()) {
+                            cancel();
+                            onBackPressed();
+                        }
+                    }
+                });
             }
         }, 0, 75);
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }

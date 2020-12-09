@@ -107,9 +107,10 @@ public class GameTile extends View {
         if(levelID == 1 && !enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
                  && playerHitEnemy(enemyList) && player.doAction(actionID)) {
             enemyList.remove(0);
-            return 0;
+            return actionID;
         }else if(levelID == 2 && !enemyList.isEmpty() && player.doAction(actionID)){
             enemyList.playerAction(actionID, player);
+            return actionID;
         }
         return 0;
     }

@@ -49,6 +49,7 @@ public class EnemyList {
             int enemyY2 = currEnemy.getBoundary().bottom;
 
             if(actionID == 2 && playerX2 < enemyX1){
+                System.out.println(currEnemy);
                 int newEnemyY = enemyY1 + ((enemyY2 - enemyY1) / 2);
                 if(playerY1 <= newEnemyY && newEnemyY <= playerY2) {
                     enemyList.remove(i);

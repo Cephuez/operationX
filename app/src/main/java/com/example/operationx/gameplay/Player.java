@@ -43,8 +43,8 @@ public class Player {
 
     public void movePlayer(Canvas canvas, int yPos){
         if(levelID == 2){
-            playerSprite.setBounds(-200 + centerView, (gameViewHeight / 2) - height + yPos,
-                    -200 + centerView + width * 2, (gameViewHeight / 2) + yPos);
+            playerSprite.setBounds(-300 + centerView, (gameViewHeight / 2) - height + yPos,
+                    -300 + centerView + width * 2, (gameViewHeight / 2) + yPos);
         }
         playerSprite.draw(canvas);
     }

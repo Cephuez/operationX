@@ -85,6 +85,9 @@ public class ActionsFragment extends Fragment {
         }
     }
 
+    public void changeTotalItems(){
+
+    }
     private void levelOnePictures(){
         TextView action1 = view.findViewById(R.id.primary_attack);
         TextView action2 = view.findViewById(R.id.secondary_attack);
@@ -107,6 +110,20 @@ public class ActionsFragment extends Fragment {
     private int actionID = 0;
     public void playerAction(GameTile gTile){
         actionID = gTile.doAction(actionID);
+        if(actionID == 2 || actionID == 3){
+            TextView action;
+            if(actionID == 2)
+                action = view.findViewById(R.id.secondary_attack);
+            else
+                action = view.findViewById(R.id.third_attack);
+            String numberStr = (String) action.getText();
+            Integer number = Integer.parseInt(numberStr);
+            if(number > 0) {
+                String newItemNumber = String.valueOf(number - 1);
+                action.setText(newItemNumber);
+            }
+        }
+        actionID = 0;
     }
 
     private void setUpActionButtons(View view){
