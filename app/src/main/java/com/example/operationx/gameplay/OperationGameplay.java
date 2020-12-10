@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -28,7 +29,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class OperationGameplay extends AppCompatActivity {
-
     private Drawable tileTest;
     private ImageView level;
     private GameTile gameView;
@@ -37,10 +37,14 @@ public class OperationGameplay extends AppCompatActivity {
     private final String[] endGameOptions = {"Next Level"};
     private ActionsFragment af;
     private GameInfoFragment gif;
-    
+
+    public OperationGameplay() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        playMusic();
         activty = this;
         setContentView(R.layout.game_layout);
         af = new ActionsFragment();
@@ -96,6 +100,7 @@ public class OperationGameplay extends AppCompatActivity {
                             gameView.changeYPos();
                         }
                         if(gameView.reachedFinishLine()) {
+                            music.pause();
                             final AlertDialog.Builder builder = new AlertDialog.Builder(OperationGameplay.this);
 
                             builder.setItems(endGameOptions, new DialogInterface.OnClickListener() {
@@ -112,7 +117,6 @@ public class OperationGameplay extends AppCompatActivity {
                                     }
                                 }
                             });
-
                             cancel();
                             AlertDialog.Builder scoreName = new AlertDialog.Builder(OperationGameplay.this);
                             scoreName.setTitle("Score: " + gameView.getPlayerScore());
@@ -139,9 +143,27 @@ public class OperationGameplay extends AppCompatActivity {
         }, 0, 100 - 25 * fps);
     }
 
+    private MediaPlayer music;
+    public void playMusic(){
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        float volumeNumber = Float.valueOf(sharedPref.getInt(getString(R.string.saved_volume_key), 1));
+        if(volumeNumber == 1)
+            volumeNumber = 100;
+
+        music = MediaPlayer.create(this,R.raw.blazer_rail);
+        music.setVolume( volumeNumber/100, volumeNumber/100);
+        music.setLooping(false);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                music.start();
+            }
+        }).start();
+    }
 
     @Override
     public void onBackPressed(){
         super.onBackPressed();
+        music.pause();
     }
 }

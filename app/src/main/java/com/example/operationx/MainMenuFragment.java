@@ -2,6 +2,7 @@ package com.example.operationx;
 
 import android.content.DialogInterface;
 import android.icu.util.Freezable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -53,6 +54,8 @@ public class MainMenuFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +72,9 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         setButtons(view);
-
         return view;
     }
+
 
     public void setButtons(View view){
         final View fView = view;

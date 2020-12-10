@@ -29,28 +29,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_layout,
                 mmFrag);
         transaction.commit();
-        playMusic();
     }
 
 
     public void startGame(View view){
         Intent intent = new Intent(this, OperationGameplay.class);
         startActivity(intent);
-        playMusic();
-
-
-    }
-
-    public void playMusic(){
-        final MediaPlayer music = MediaPlayer.create(this,R.raw.blazer_rail);
-        music.setVolume(1,1);
-        music.setLooping(false);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                music.start();
-            }
-        }).start();
     }
 }
 
