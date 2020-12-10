@@ -39,6 +39,11 @@ public class GameTile extends View {
     private LevelBoundaries levelBoundaries;
     private LevelControllers levelControllers;
 
+    /**
+     * Set up the game tile where everything will be seen
+     * @param currActivity - reference to activty
+     * @param levelID - reference to level number
+     */
     public GameTile(Activity currActivity, int levelID){
         super(currActivity);
         this.levelID = levelID;
@@ -52,6 +57,11 @@ public class GameTile extends View {
     private float x1,x2,y1,y2;
     static final int MIN_DISTANCE = 150;
 
+    /**
+     * Controller for the game. It will allow the player to slide around the screen
+     * @param event
+     * @return return boolean if something happened
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
@@ -89,6 +99,10 @@ public class GameTile extends View {
         return true;
     }
 
+    /**
+     * It will redraw the images of each drawable as a FPS game
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
@@ -103,6 +117,11 @@ public class GameTile extends View {
 
     }
 
+    /**
+     * Depending what buttons are pressed, an action will occur to the enemy
+     * @param actionID - action pressed
+     * @return return 0 if aciton was invalid
+     */
     public int doAction(int actionID){
         if(levelID == 1 && !enemyList.isEmpty() && enemyList.get(0).playerAction(actionID)
                  && playerHitEnemy(enemyList) && player.doAction(actionID)) {
@@ -122,6 +141,13 @@ public class GameTile extends View {
     public boolean playerDead(){
         return player.isDead();
     }
+
+    /**
+     * Detect enemies has been hit
+     *
+     * @param enemyList - List of enemies currently on the level
+     * @return return if enemy has been encountered
+     */
     private boolean playerHitEnemy(EnemyList enemyList){
         if(levelID == 1){
             return playerHitEnemyLevelOne();
@@ -130,6 +156,10 @@ public class GameTile extends View {
         }
     }
 
+    /**
+     * Controllers for level 1
+     * @return
+     */
     private boolean playerHitEnemyLevelOne(){
         if(enemyList.isEmpty())
             return false;
@@ -140,6 +170,10 @@ public class GameTile extends View {
         return enemyEncountered;
     }
 
+    /**
+     *
+     * @return
+     */
     private boolean playerHitEnemyLevelTwo(){
         if(enemyList.isEmpty())
             return false;
