@@ -28,13 +28,16 @@
         android:textSize="30sp"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"/>
-    <ImageView
-        android:id="@+id/map_button"
+    <TextView
+        android:id="@+id/howTo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="#2196F3"
         android:layout_margin="2dp"
-        android:src="@drawable/map"/>
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:text="How To Play"/>
     <ImageView
         android:id="@+id/pause_button"
         android:layout_width="100dp"
