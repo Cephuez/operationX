@@ -47,7 +47,6 @@ public class LevelsListFragment extends Fragment {
         // Required empty public constructor
         levels.add(level1);
         levels.add(level2);
-        levels.add(level3);
     }
 
     /**

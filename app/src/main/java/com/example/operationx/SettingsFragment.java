@@ -88,7 +88,8 @@ public class SettingsFragment extends Fragment {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                System.out.println(volume + "/" + seekBar.getMax());
+                float volumeFloat = volume;
+                MainActivity.MUSIC.setVolume(volumeFloat / 100, volumeFloat/100);
                 editor.putInt(getString(R.string.saved_volume_key), volume);
                 editor.apply();
             }

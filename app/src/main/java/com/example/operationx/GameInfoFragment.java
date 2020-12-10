@@ -157,6 +157,8 @@ public class GameInfoFragment extends Fragment {
     public void addOnclick(View view, final int level) {
         final int fLevel = level;
         final TextView howTo = view.findViewById(R.id.howTo);
+
+
         howTo.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -170,18 +172,23 @@ public class GameInfoFragment extends Fragment {
                         .replace(R.id.game_layout, htf)
                         .addToBackStack(null)
                         .commit();
+
+
             }
         });
 
         TextView livesBox = view.findViewById(R.id.lives_box);
         livesBox.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 model.getCurrentLives().setValue(2);
             }
         });
 
+
         ImageView pause = view.findViewById(R.id.pause_button);
+
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             /**
