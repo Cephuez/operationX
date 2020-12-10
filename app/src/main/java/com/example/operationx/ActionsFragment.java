@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.example.operationx.gameplay.GameTile;
 
 import org.w3c.dom.Text;
+/**
+ * This fragment represents the bottom action selection of the game. It will be
+ * displayed at every level.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,10 +77,17 @@ public class ActionsFragment extends Fragment {
         return view;
     }
 
+    /**
+     * setter for the levelId
+     * @param levelID
+     */
     public void getLevelID(int levelID){
         this.levelID = levelID;
     }
 
+    /**
+     * Calls helper methods to change action images in this fragment.
+     */
     public void changeActionPicture(){
         if(levelID == 1){
             levelOnePictures();
@@ -85,9 +96,10 @@ public class ActionsFragment extends Fragment {
         }
     }
 
-    public void changeTotalItems(){
 
-    }
+    /**
+     * Simply adds pictures for each attack in each level.
+     */
     private void levelOnePictures(){
         TextView action1 = view.findViewById(R.id.primary_attack);
         TextView action2 = view.findViewById(R.id.secondary_attack);
@@ -97,6 +109,9 @@ public class ActionsFragment extends Fragment {
         action3.setBackgroundResource(R.drawable.level_1_third_attack);
     }
 
+    /**
+     * Simply adds pictures for each attack in each level.
+     */
     private void levelTwoPictures(){
         TextView action1 = view.findViewById(R.id.primary_attack);
         TextView action2 = view.findViewById(R.id.secondary_attack);
@@ -108,6 +123,11 @@ public class ActionsFragment extends Fragment {
 
 
     private int actionID = 0;
+    /**
+     * Sets item inventory for the views of each action and calls doAction in the
+     * game tile to attack the enemy.
+     * @param gTile GameTile (canvas of the game)
+     */
     public void playerAction(GameTile gTile){
         actionID = gTile.doAction(actionID);
         if(actionID == 2 || actionID == 3){
@@ -126,6 +146,11 @@ public class ActionsFragment extends Fragment {
         actionID = 0;
     }
 
+    /**
+     *  Sets onclick listeners and sets an action ID for the game canvas for
+     *  each action item.
+     * @param view the fragment of interest.
+     */
     private void setUpActionButtons(View view){
         TextView action1 = view.findViewById(R.id.primary_attack);
         action1.setOnClickListener(new View.OnClickListener() {

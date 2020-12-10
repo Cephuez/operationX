@@ -15,24 +15,27 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+/**
+ * POST method for nodejs server to post to leaderboard in mongodb instance.
+ */
 public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
     static final String REQUEST_METHOD = "POST";
     static final int READ_TIMEOUT = 15000;
     static final int CONNECTION_TIMEOUT = 15000;
 
+    /**
+     * POSTS to our nodejs server.
+     * @param objects
+     * @return
+     */
     @Override
     protected Void doInBackground(Object... objects) {
-
-            // connect to the server
-
             HttpURLConnection urlConn = null;
             String result = "";
-
             JSONObject json = new JSONObject();
             try {
                 json.put("User", (String) objects[0]);
                 json.put("Score", (Integer) objects[1]);
-                //URL address = new URL("https://kettlex-server.herokuapp.com/operationx/post");
                 URL url;
                 DataOutputStream printout;
                 String address = "https://kettlex-server.herokuapp.com/operationx/post";
@@ -48,9 +51,7 @@ public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
                 urlConn.connect();
                 // Send POST output.
                 DataOutputStream os = new DataOutputStream(urlConn.getOutputStream());
-                //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                 os.writeBytes(json.toString());
-
                 os.flush();
                 os.close();
 
@@ -59,14 +60,6 @@ public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
 
                 urlConn.disconnect();
 
-               /* printout = new DataOutputStream(urlConn.getOutputStream());
-                String output = URLEncoder.encode(json.toString(),"UTF-8");
-                Log.d("postTaskURL",output);
-                printout.writeUTF(json.toString());
-                printout.flush();
-                result = Integer.toString(urlConn.getResponseCode());
-                Log.d("HTTP Response code", result);
-                printout.close();*/
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }  finally {
@@ -74,28 +67,5 @@ public class HttpPostRequest extends AsyncTask<Object, Void, Void> {
                     urlConn.disconnect();
             }
             return null;
-            /*HttpURLConnection connection =(HttpURLConnection) myUrl.openConnection();
-            connection.setRequestMethod(REQUEST_METHOD);
-            connection.setReadTimeout(READ_TIMEOUT);
-            connection.setConnectTimeout(CONNECTION_TIMEOUT);
-            connection.setRequestProperty("Content-Type","application/json");
-            connection.connect();
-
-            // get the string from the input stream
-            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(streamReader);
-            StringBuilder stringBuilder = new StringBuilder();
-            while((inputLine = reader.readLine()) != null){
-                stringBuilder.append(inputLine);
-            }
-            reader.close();
-            streamReader.close();
-            result = stringBuilder.toString();
-            System.out.println("GET result: " + result);
-
-        } catch(IOException e) {
-            e.printStackTrace();
-            result = "error";
-        }*/
     }
 }

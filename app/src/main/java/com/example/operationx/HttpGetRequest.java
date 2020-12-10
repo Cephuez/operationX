@@ -17,6 +17,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * HTTP GET method to call a nodejs server that returns leaderboard info stored
+ * in mongodb instance.
+ */
+
 public class HttpGetRequest extends AsyncTask<Object, Void, JSONArray> {
     View view;
     static final String REQUEST_METHOD = "GET";
@@ -24,6 +29,11 @@ public class HttpGetRequest extends AsyncTask<Object, Void, JSONArray> {
     static final int CONNECTION_TIMEOUT = 15000;
     public JSONArray arrayResult;
 
+    /**
+     * Calls GET to return JSONArray of leaderboard info
+     * @param objects
+     * @return
+     */
     @Override
     protected JSONArray doInBackground(Object... objects){
         String result;
@@ -59,12 +69,14 @@ public class HttpGetRequest extends AsyncTask<Object, Void, JSONArray> {
         return null;
     }
 
+    /**
+     * Sets information in the leaderboard listview.
+     * @param jsonArray
+     */
     protected void onPostExecute(JSONArray jsonArray){
         ListView simpleListView=(ListView) view.findViewById(R.id.leaderBoardList);
         ArrayList<HashMap<String,String>> arrayList=new ArrayList<>();
         JSONArray scoresList = null;
-
-
 
         for(int i=0; i<jsonArray.length(); i++) {
             try {

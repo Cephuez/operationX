@@ -14,6 +14,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+/**
+ * This represents the settings menu that will have volume and
+ * game fps settings.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,11 +71,9 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
         SeekBar sBar = view.findViewById(R.id.volumeSeekBar);
         SharedPreferences sharedPref = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
-
         //SeekBar saves the volume setting
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int volume = 50;
@@ -89,11 +91,10 @@ public class SettingsFragment extends Fragment {
                 System.out.println(volume + "/" + seekBar.getMax());
                 editor.putInt(getString(R.string.saved_volume_key), volume);
                 editor.apply();
-
-
             }
         });
 
+        //Sets the gameFPS on click of each textbox.
         final TextView normal = view.findViewById(R.id.normalSetting);
         final TextView fast = view.findViewById(R.id.fastSetting);
         //Save fps to normal
@@ -125,10 +126,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Save settings to shared preferences and close fragment
-
                 System.out.println("Popped");
                 requireActivity().getSupportFragmentManager().popBackStack();
-
             }
         });
         return view;
