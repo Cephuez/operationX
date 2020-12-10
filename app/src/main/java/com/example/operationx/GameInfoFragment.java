@@ -90,9 +90,7 @@ public class GameInfoFragment extends Fragment {
         int lives = 3;
 
         model = new ViewModelProvider(requireActivity()).get(GameOptionsViewModel.class);
-        ImageView mapView = view.findViewById(R.id.map_button);
-        registerForContextMenu(mapView);
-        addOnclick(view);
+        addOnclick(view, level);
         setObservers(view);
         model.getCurrentLevel().setValue(level);
         model.getCurrentLives().setValue(lives);
@@ -103,6 +101,7 @@ public class GameInfoFragment extends Fragment {
     public void setObservers(View view){
         final TextView livesBox =  view.findViewById(R.id.lives_box);
         final TextView levelBox = view.findViewById(R.id.level_box);
+        final TextView howTo = view.findViewById(R.id.howToInstructions);
         // Create the observer which updates the UI.
         final Observer<Integer> currLivesObserver = new Observer<Integer>() {
             @Override
@@ -118,6 +117,8 @@ public class GameInfoFragment extends Fragment {
         final Observer<Integer> currLevelObserver = new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable final Integer level) {
+
+
                 // Update the UI, in this case, a TextView.
                 System.out.println("level = " + level);
                 //Code to update level here ****
@@ -134,9 +135,30 @@ public class GameInfoFragment extends Fragment {
         return pausedGame;
     }
 
-    public void addOnclick(View view) {
-        TextView livesBox = view.findViewById(R.id.lives_box);
+    public void addOnclick(View view, final int level) {
+        final int fLevel = level;
+        final TextView howTo = view.findViewById(R.id.howTo);
 
+
+        howTo.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                HowToFragment htf = new HowToFragment();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putInt("LEVEL_HOW", level);
+                htf.setArguments(bundle);
+                fm.beginTransaction()
+                        .replace(R.id.game_layout, htf)
+                        .addToBackStack(null)
+                        .commit();
+
+
+            }
+        });
+
+        TextView livesBox = view.findViewById(R.id.lives_box);
         livesBox.setOnClickListener(new View.OnClickListener() {
 
             @Override
