@@ -20,6 +20,14 @@ public class GroundTile {
 
     private int width, height, gameViewHeight, levelID;
 
+    /**
+     * Set up the class to make the ground for the levels
+     * @param currActivity - ref to activity
+     * @param width - width of each tile
+     * @param height - height of each tile
+     * @param gameViewHeight - size of the screen
+     * @param levelID - level reference
+     */
     public GroundTile(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
         this.currActivity = currActivity;
         this.width = width;
@@ -36,6 +44,11 @@ public class GroundTile {
         }
     }
 
+    /**
+     * Set up the level for one
+     * @param canvas
+     * @param xPos
+     */
     private void setUpLevelOne(Canvas canvas, int xPos){
         Drawable tile1 = currActivity.getResources().getDrawable(R.drawable.ground_tile_1);
         Drawable tile2 = currActivity.getResources().getDrawable(R.drawable.ground_tile_2);

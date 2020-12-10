@@ -43,6 +43,11 @@ public class OperationGameplay extends AppCompatActivity {
     public OperationGameplay() {
     }
 
+    /**
+     * It will set up the fragment to be displayed on the screen. This will allow the player
+     * to view all of the views like the player on the level, buttons, and in game menu
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,11 @@ public class OperationGameplay extends AppCompatActivity {
         System.out.println("Current LEVEL_INT: " + getIntent().getExtras().getInt("LEVEL_INT"));
     }
 
+    /**
+     * This will set up the tile map where the game will be scene. This is where the player
+     * will interact with the game
+     * @param levelID
+     */
     private void createTileMap(int levelID){
         af.getLevelID(levelID);
         gameView = new GameTile(this,levelID);
@@ -83,6 +93,10 @@ public class OperationGameplay extends AppCompatActivity {
         gameView = new GameTile(this,levelID);
     }
 
+    /**
+     * The game will be runned in a timer and will have to check if the player has died, passed the
+     * game, or redraw the canvas to give that animation.
+     */
     private void beginPlayerMovement() {
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         Integer fps = sharedPref.getInt(getString(R.string.saved_fps_key), 1);

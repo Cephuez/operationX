@@ -12,6 +12,14 @@ public class EnemyList {
     private ArrayList<Enemy> enemyList;
     private int width, height, gameViewHeight, levelID;
 
+    /**
+     * Create the list of enemies that will be displayed on the level
+     * @param currActivity - ref to the activty
+     * @param width - width of each enemy
+     * @param height - height of the enemy
+     * @param gameViewHeight - get height of the screen
+     * @param levelID - levelID
+     */
     public EnemyList(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
         this.currActivity = currActivity;
         this.width = width;
@@ -35,6 +43,12 @@ public class EnemyList {
         return enemyList.size();
     }
 
+    /**
+     * Set up the player actions for level 2
+     * @param actionID - get actino button
+     * @param player - reference to player position
+     * @param xPos - locaiton of canvas
+     */
     public void playerAction(int actionID, Player player, int xPos){
         for(int i = 0; i < enemyList.size(); i++){
             int playerX1 = player.getBounds().left;
@@ -69,6 +83,11 @@ public class EnemyList {
 
     }
 
+    /**
+     * Set up the enemies
+     * @param canvas
+     * @param xPos
+     */
     public void updateEnemies(Canvas canvas, int xPos){
         for(int i = 0; i < enemyList.size(); i++){
             Enemy currEnemy = enemyList.get(i);
@@ -83,6 +102,9 @@ public class EnemyList {
         }
     }
 
+    /**
+     * Set up the enemy list
+     */
     private void setUpList(){
         if(levelID == 1)
             setLevelOne();
@@ -91,6 +113,9 @@ public class EnemyList {
         }
     }
 
+    /**
+     * Set the level one
+     */
     private void setLevelOne(){
         for(int i = 1; i < 3; i++){
             Rect bounds = new Rect(700*i,(gameViewHeight/2) - height,(700*i + width),(gameViewHeight/2));
@@ -111,6 +136,9 @@ public class EnemyList {
         }
     }
 
+    /**
+     * Set the level two
+     */
     private void setLevelTwo(){
         Rect bounds = new Rect(700*1,0,(700*1 + width),(gameViewHeight/4));
         Enemy newEnemy = new Enemy(levelID,0,bounds, currActivity);

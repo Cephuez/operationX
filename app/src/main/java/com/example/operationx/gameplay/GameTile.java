@@ -171,7 +171,7 @@ public class GameTile extends View {
     }
 
     /**
-     *
+     * Controller for level 2
      * @return
      */
     private boolean playerHitEnemyLevelTwo(){
@@ -192,6 +192,10 @@ public class GameTile extends View {
         invalidate();
     }
 
+    /**
+     * Player shoots at player in level 2
+     * @param canvas
+     */
     public void playerShoots(Canvas canvas){
         if(levelID == 2){
             Drawable bullet1 = getResources().getDrawable(R.drawable.laser_bullet);
@@ -211,6 +215,10 @@ public class GameTile extends View {
         }
     }
 
+    /**
+     * Update the position of the bullets of the plane
+     * @param canvas
+     */
     public void updateBulletPosition(Canvas canvas){
         if(levelID == 2) {
             for (int i = 0; i < laserBullets.size(); i++) {
@@ -230,17 +238,23 @@ public class GameTile extends View {
         }
     }
 
-    public void changeXPos(){
-        if(levelID == 1 && !playerHitEnemy(enemyList) || (xDir == -1 && xPos > 500)){
+    /**
+     * Change positino of the objects on canvas
+     */
+    public void changeXPos() {
+        if (levelID == 1 && !playerHitEnemy(enemyList) || (xDir == -1 && xPos > 500)) {
             xPos += 50 * -xDir;
-        }else if(levelID == 2){
+        } else if (levelID == 2) {
             xPos -= 50;
-            if(playerHitEnemy(enemyList)){
+            if (playerHitEnemy(enemyList)) {
                 player.loseLife();
             }
         }
     }
 
+    /**
+     * Change y position of the player
+     */
     public void changeYPos(){
         if(levelID == 2){
             yPos -= 45 * yDir;

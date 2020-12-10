@@ -16,6 +16,14 @@ public class LevelBoundaries {
     private ArrayList<Rect> endBoundaries;
     private Rect finishLine;
 
+    /**
+     * Set up the boundaries for the level
+     * @param currActivity - ref to activity
+     * @param width - width of the level
+     * @param height - height of the level
+     * @param gameViewHeight - size of the screen
+     * @param levelID - level reference
+     */
     public LevelBoundaries(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
         this.currActivity = currActivity;
         this.width = width;
@@ -28,6 +36,11 @@ public class LevelBoundaries {
         return endBoundaries;
     }
 
+    /**
+     * Display the boundaries of the game level
+     * @param canvas
+     * @param xPos
+     */
     public void displayBoundaries(Canvas canvas, int xPos){
         endBoundaries = new ArrayList<Rect>();
         if(levelID == 1){
@@ -41,7 +54,11 @@ public class LevelBoundaries {
         return player.getBounds().intersect(finishLine);
     }
 
-    // Add the boundaries to the level then it should be good xd.
+    /**
+     * Set the background for the level
+     * @param canvas - reference to canvas
+     * @param xPos - position of the canvas
+     */
     private void backgroundLevelOne(Canvas canvas, int xPos){
         Drawable endBackground = currActivity.getResources().getDrawable(R.drawable.ground_tile_2);
         Drawable endPoint = currActivity.getResources().getDrawable(R.drawable.sky_sprite_1);
@@ -74,6 +91,11 @@ public class LevelBoundaries {
         endBoundaries.add(new Rect(20 * width + xPos, 0, 20 * width + width + xPos, gameViewHeight));
     }
 
+    /**
+     * Get the player's boundaries
+     * @param playerBoundaries
+     * @return
+     */
     public boolean playerOnEndBoundaries(Rect playerBoundaries){
         for(int i = 0; i < endBoundaries.size(); i++){
             if(endBoundaries.get(i).intersect(playerBoundaries))
@@ -82,6 +104,11 @@ public class LevelBoundaries {
         return false;
     }
 
+    /**
+     * Set up the boundaries for level 2
+     * @param canvas - set up the canvas
+     * @param xPos - the position x of the canvas
+     */
     private void backgroundLevelTwo(Canvas canvas, int xPos){
         finishLine = new Rect(40 * width + xPos, 0,
                 40*width + width + xPos, gameViewHeight);

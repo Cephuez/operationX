@@ -18,6 +18,14 @@ public class Player {
     private int width, height, gameViewHeight, levelID, centerView;
     private Inventory inventory;
 
+    /**
+     * The player's inventory and boundaries will be created here
+     * @param currActivity - reference to activity
+     * @param width - width of player
+     * @param height - height of player
+     * @param gameViewHeight - height of the screen
+     * @param levelID - level reference
+     */
     public Player(Activity currActivity, int width, int height, int gameViewHeight, int levelID){
         this.currActivity = currActivity;
         this.width = width;
@@ -30,6 +38,9 @@ public class Player {
         setPlayerBoundaries();
     }
 
+    /**
+     * Player loses life
+     */
     public void loseLife(){
         lives -= 1;
     }
@@ -56,6 +67,10 @@ public class Player {
     public Rect getBounds(){
         return playerSprite.getBounds();
     }
+
+    /**
+     * Get the boundaries of the player
+     */
     private void setPlayerBoundaries(){
         getPlayerDrawable();
         if(levelID == 1) {
