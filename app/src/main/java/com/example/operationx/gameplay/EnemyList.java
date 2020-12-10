@@ -35,7 +35,7 @@ public class EnemyList {
         return enemyList.size();
     }
 
-    public void playerAction(int actionID, Player player){
+    public void playerAction(int actionID, Player player, int xPos){
         for(int i = 0; i < enemyList.size(); i++){
             int playerX1 = player.getBounds().left;
             int playerX2 = player.getBounds().right;
@@ -48,6 +48,7 @@ public class EnemyList {
             int enemyY1 = currEnemy.getBoundary().top;
             int enemyY2 = currEnemy.getBoundary().bottom;
 
+            System.out.println(enemyX1);
             if(actionID == 2 && playerX2 < enemyX1){
                 int newEnemyY = enemyY1 + ((enemyY2 - enemyY1) / 2);
                 if(playerY1 <= newEnemyY && newEnemyY <= playerY2) {
@@ -56,13 +57,15 @@ public class EnemyList {
                 }
             }
 
-            System.out.println(enemyX2);
-            if(actionID == 3 && (0 < enemyX2 && 0 < enemyY2  && enemyX1 < gameViewHeight * 2 && enemyY1 < gameViewHeight)){
+            if(actionID == 3 && (playerX1 - xPos < enemyX2 && 0 < enemyY2
+                    && enemyX1 < playerX1 - xPos + 2000 && enemyY1 < gameViewHeight)){
                 System.out.println("Destroyed some objects");
                 enemyList.remove(i);
                 i -= 1;
             }
         }
+        System.out.println(player.getBounds().left + xPos + "<-->" + player.getBounds().right + xPos);
+        System.out.println("End");
 
     }
 
