@@ -2,21 +2,26 @@ package com.example.operationx.gameplay;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.operationx.ActionsFragment;
 import com.example.operationx.GameInfoFragment;
 import com.example.operationx.HttpPostRequest;
+import com.example.operationx.LevelsListFragment;
 import com.example.operationx.R;
 
 import java.util.Timer;
@@ -29,7 +34,7 @@ public class OperationGameplay extends AppCompatActivity {
     private GameTile gameView;
     private Canvas canvas;
     private Activity activty;
-
+    private final String[] endGameOptions = {"Next Level"};
     private ActionsFragment af;
     private GameInfoFragment gif;
     
@@ -83,23 +88,72 @@ public class OperationGameplay extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(!gif.isPaused()) {
-                            gameView.clearCanvas(canvas);
-                            gameView.draw(canvas);
-                            af.playerAction(gameView);
-                            gameView.changeXPos();
-                            gameView.changeYPos();
-                            if (gameView.reachedFinishLine()) {
-                                HttpPostRequest request = new HttpPostRequest();
-                                request.execute("TestX", gameView.getPlayerScore());
-                                cancel();
-                            }
+                        gameView.clearCanvas(canvas);
+                        gameView.draw(canvas);
+                        af.playerAction(gameView);
+                        gameView.changeXPos();
+                        gameView.changeYPos();
+                        if(gameView.reachedFinishLine()) {
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(OperationGameplay.this);
+
+                            builder.setItems(endGameOptions, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if(which == 0){
+                                        System.out.println("Go to Next Level");
+                                        LevelsListFragment llf = new LevelsListFragment();
+                                        FragmentManager fm = getSupportFragmentManager();
+                                        fm.beginTransaction()
+                                                .replace(R.id.game_layout, llf)
+                                                .addToBackStack(null)
+                                                .commit();
+                                    }
+                                }
+                            });
+
+
+
+
+                            cancel();
+
+                            AlertDialog.Builder scoreName = new AlertDialog.Builder(OperationGameplay.this);
+                            scoreName.setTitle("Score: " + gameView.getPlayerScore());
+                            scoreName.setMessage("Enter Name for score:");
+
+// Set an EditText view to get user input
+                            final EditText input = new EditText(OperationGameplay.this);
+                            scoreName.setView(input);
+
+                            scoreName.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    String userName = input.getText().toString();
+                                    HttpPostRequest request = new HttpPostRequest();
+                                    request.execute(userName, gameView.getPlayerScore());
+                                    AlertDialog alertDialog = builder.show();
+                                    alertDialog.setCanceledOnTouchOutside(false);
+                                    alertDialog.setCancelable(false);
+                                    return;
+                                }
+                            });
+
+                           /* scoreName.setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // TODO Auto-generated method stub
+                                            return;
+                                        }
+                                    });*/
+                            scoreName.show();
+
+
+
                         }
                     }
                 });
             }
-        }, 0, 100 - 25 * fps);
+        }, 0, 75);
     }
+
 
     @Override
     public void onBackPressed(){
