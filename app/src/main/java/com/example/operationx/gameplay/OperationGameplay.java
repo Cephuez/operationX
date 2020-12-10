@@ -88,11 +88,13 @@ public class OperationGameplay extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        gameView.clearCanvas(canvas);
-                        gameView.draw(canvas);
-                        af.playerAction(gameView);
-                        gameView.changeXPos();
-                        gameView.changeYPos();
+                        if(!gif.isPaused()) {
+                            gameView.clearCanvas(canvas);
+                            gameView.draw(canvas);
+                            af.playerAction(gameView);
+                            gameView.changeXPos();
+                            gameView.changeYPos();
+                        }
                         if(gameView.reachedFinishLine()) {
                             final AlertDialog.Builder builder = new AlertDialog.Builder(OperationGameplay.this);
 
@@ -111,16 +113,10 @@ public class OperationGameplay extends AppCompatActivity {
                                 }
                             });
 
-
-
-
                             cancel();
-
                             AlertDialog.Builder scoreName = new AlertDialog.Builder(OperationGameplay.this);
                             scoreName.setTitle("Score: " + gameView.getPlayerScore());
                             scoreName.setMessage("Enter Name for score:");
-
-// Set an EditText view to get user input
                             final EditText input = new EditText(OperationGameplay.this);
                             scoreName.setView(input);
 
@@ -135,23 +131,12 @@ public class OperationGameplay extends AppCompatActivity {
                                     return;
                                 }
                             });
-
-                           /* scoreName.setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // TODO Auto-generated method stub
-                                            return;
-                                        }
-                                    });*/
                             scoreName.show();
-
-
-
                         }
                     }
                 });
             }
-        }, 0, 75);
+        }, 0, 100 - 25 * fps);
     }
 
 
