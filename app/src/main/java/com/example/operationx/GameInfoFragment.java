@@ -178,8 +178,6 @@ public class GameInfoFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("PAUSED");
 
-
-
                 builder.setItems(pauseOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

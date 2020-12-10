@@ -16,6 +16,13 @@ public class Enemy {
     private Rect colliderBoundary;
     private Activity currActivity;
 
+    /**
+     * Set up the enemies to be destroyed by the player
+     * @param levelID - level number
+     * @param enemyID - enemy ID
+     * @param boundary - boundary of the enemy
+     * @param currActivity - ref for activity
+     */
     public Enemy(int levelID, int enemyID, Rect boundary, Activity currActivity) {
         this.levelID = levelID;
         this.enemyID = enemyID;
@@ -26,6 +33,10 @@ public class Enemy {
         enemyWeakness();
     }
 
+    /**
+     * Get drawing of the enemy
+     * @return drawable of enemy
+     */
     public Drawable getDrawable() {
         if (levelID == 1) {
             return getLevelOneDrawable();
@@ -34,6 +45,10 @@ public class Enemy {
         }
     }
 
+    /**
+     * Get drawings of enemies from level one
+     * @return get drawable of enemies
+     */
     private Drawable getLevelOneDrawable(){
         Drawable enemies = null;
         if(enemyID == 0){
@@ -47,6 +62,10 @@ public class Enemy {
     }
 
 
+    /**
+     * Get drawings of enemies from level two
+     * @return get drawable of enemies
+     */
     private Drawable getLevelTwoDrawable(){
         Drawable enemies = null;
         if(enemyID == 0){
@@ -58,6 +77,7 @@ public class Enemy {
         }
         return enemies;
     }
+
     public Rect getBoundary(){
         return boundary;
     }
@@ -78,6 +98,9 @@ public class Enemy {
         return enemyID;
     }
 
+    /**
+     * Set up the weaknesses of each enemy
+     */
     private void enemyWeakness(){
         if(enemyID == 0) {
             weakness.add(1);
