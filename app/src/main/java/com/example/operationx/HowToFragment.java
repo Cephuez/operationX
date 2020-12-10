@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+/**
+ * Represents the fragment that pops up to show the user the
+ * instructions for the game.
+ */
 
 /**
  * A simple {@link Fragment} subclass.

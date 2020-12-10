@@ -2,7 +2,6 @@ package com.example.operationx;
 
 import android.content.DialogInterface;
 import android.icu.util.Freezable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.logging.Level;
+
+/** This is the main menu that you see when the game is booted and
+ * guides the player to other areas of the app.
+
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,8 +59,6 @@ public class MainMenuFragment extends Fragment {
         return fragment;
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,12 +73,15 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
-
         setButtons(view);
         return view;
     }
 
-
+    /**
+     * Activates all fragments on every button for the player navigation to
+     * game settings, leaderboards or start the game.
+     * @param view
+     */
     public void setButtons(View view){
         final View fView = view;
         Button levelButton = (Button) view.findViewById(R.id.level_button);
@@ -95,15 +100,6 @@ public class MainMenuFragment extends Fragment {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("SETTINGS");
-                builder.setItems(settingsOptions, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();*/
                 System.out.println("Launch settings alert menu");
                 SettingsFragment sf = new SettingsFragment();
                 FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -127,25 +123,18 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-
         Button leaderBoards = view.findViewById(R.id.leaderB_button);
         leaderBoards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpGetRequest request = new HttpGetRequest();
                 request.execute(fView);
-
                 LeaderBoardsFragment lb = new LeaderBoardsFragment();
-
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_menu_frag, lb, "leaderBoardFragment")
                         .addToBackStack(null)
                         .commit();
-
-
             }
         });
-
     }
-
 }

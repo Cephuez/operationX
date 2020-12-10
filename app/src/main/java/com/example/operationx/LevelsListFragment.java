@@ -18,6 +18,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+/**
+ * Represents the fragment that lets you select a level. Three
+ * are populated in this levels list.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +78,10 @@ public class LevelsListFragment extends Fragment {
 
 
     @Override
+    /**
+     * Sets the simple view adapter to the fragment and populates that information
+     * for each element and makes it activate the game onclick.
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -98,8 +106,6 @@ public class LevelsListFragment extends Fragment {
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 Intent intent = new Intent(getActivity(), OperationGameplay.class);
                 GameLevel level = levels.get(i);
                 intent.putExtra("LEVEL_INT", level.level);

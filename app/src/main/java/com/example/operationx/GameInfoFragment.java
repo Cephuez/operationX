@@ -23,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+/**
+ * Represents the top menu that contains level, lives, and game menus buttons
+ * that will help the player navigate through the game.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,7 +101,11 @@ public class GameInfoFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * Sets observers for this fragment to be updated with information for the
+     * textviews that display useful game info.
+     * @param view
+     */
     public void setObservers(View view){
         final TextView livesBox =  view.findViewById(R.id.lives_box);
         final TextView levelBox = view.findViewById(R.id.level_box);
@@ -131,10 +139,21 @@ public class GameInfoFragment extends Fragment {
     }
 
     private boolean pausedGame;
+
+    /**
+     * getter for pausedGame
+     * @return
+     */
     public boolean isPaused(){
         return pausedGame;
     }
 
+    /**
+     * Adds onclick functionality to every button on the this
+     * fragment.
+     * @param view
+     * @param level
+     */
     public void addOnclick(View view, final int level) {
         final int fLevel = level;
         final TextView howTo = view.findViewById(R.id.howTo);
@@ -172,12 +191,14 @@ public class GameInfoFragment extends Fragment {
 
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * Contains nested AlertDialogue boxes.
+             */
             public void onClick(View v) {
                 pausedGame = true;
                 //Pause the game animation here... <-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("PAUSED");
-
                 builder.setItems(pauseOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -203,8 +224,6 @@ public class GameInfoFragment extends Fragment {
                 AlertDialog alertDialog = builder.show();
                 alertDialog.setCanceledOnTouchOutside(false);
                 alertDialog.setCancelable(false);
-
-                //builder.show();
             }
         });
     }

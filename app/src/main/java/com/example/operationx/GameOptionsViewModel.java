@@ -3,8 +3,11 @@ package com.example.operationx;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * View model that contains methods that hold the games information
+ * to be used in the gameinfofragmnet. Other methods are left for future iterations.
+ */
 public class GameOptionsViewModel extends ViewModel {
-
     private MutableLiveData<Integer> currentLives;
     private MutableLiveData<Integer> currentLevel;
     private MutableLiveData<Boolean> mapPressed;
@@ -13,7 +16,6 @@ public class GameOptionsViewModel extends ViewModel {
     private MutableLiveData<Integer> currentSecondary;
     private MutableLiveData<Integer> currentThird;
     private MutableLiveData<Integer> currentActionId;
-
 
     public MutableLiveData<Integer> getCurrentLives() {
         if(currentLives == null) {

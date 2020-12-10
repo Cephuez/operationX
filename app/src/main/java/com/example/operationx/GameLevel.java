@@ -1,7 +1,9 @@
 package com.example.operationx;
 
+/**
+ * Represents game level objects to be held in the levelslistfragment
+ */
 public class GameLevel {
-
     int level;
     String levelName;
     int difficulty;

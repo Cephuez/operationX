@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Represents the fragment that contains the leader boards list to be
+ * populated with username and score information from nodejs server.
+ */
+
+/**
  * A simple {@link Fragment} subclass.
  * Use the {@link LeaderBoardsFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -68,9 +73,6 @@ public class LeaderBoardsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leader_boards, container, false);
-
-
-
         return view;
     }
 }

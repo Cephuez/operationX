@@ -18,6 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+/**
+ * This fragment creates a list of contacts from the phone and sets
+ * onclick listeners for each element on the list to activate the email
+ * intent and send an email to attract new users.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +72,14 @@ public class ShareFragment extends Fragment {
         }
     }
 
+    /**
+     * sets the array adapter to set a list of contacts. Shares the game by email if clicked
+     * on a contact.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,29 +112,27 @@ public class ShareFragment extends Fragment {
         return view;
     }
 
-
-        public void shareGame(String contactId){
-
-            Cursor phones = getActivity().getContentResolver().query(
-                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
-           //Uri uri = getArguments().getParcelable("URI");
-            String email = "";
-            if (phones.moveToNext()) {
-                email = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
-            }
-            phones.close();
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("plain/text");
-           // intent.setType("vnd.android.cursor.dir/email");
-            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
-            //intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
-            String text = getResources().getString(R.string.share_message);
-            intent.putExtra(Intent.EXTRA_TEXT, text);
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Play OperationX Please?");
-            //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(intent);
-            System.out.println("Image shared!!");
+    /**
+     *  Sets the email activity with relevant contact data.
+     * @param contactId
+     */
+    public void shareGame(String contactId){
+        Cursor phones = getActivity().getContentResolver().query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
+        String email = "";
+        if (phones.moveToNext()) {
+            email = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+        }
+        phones.close();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
+        String text = getResources().getString(R.string.share_message);
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Play OperationX Please?");
+        startActivity(intent);
+        System.out.println("Image shared!!");
     }
 
 }
